@@ -58,8 +58,8 @@ class CategoriesController extends Controller
             'image' => $imageName,
 
         ]);
-
-        return redirect()->route('dashboard.categories.index')->with('success', 'The category was created successfully');
+        notify()->success('Category was created successfully ⚡️');
+        return redirect()->route('dashboard.categories.index');
     }
 
     /**
