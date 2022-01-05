@@ -5,7 +5,9 @@ namespace App\Http\Controllers\Dashboard;
 use App\Models\Category;
 use Illuminate\Support\Str;
 
+use Illuminate\Validation\Rule;
 use App\Http\Controllers\Controller;
+use Illuminate\Support\Facades\Storage;
 use App\Http\Requests\StoreCategoriesRequest;
 use App\Http\Requests\UpdateCategoriesRequest;
 
@@ -43,12 +45,13 @@ class CategoriesController extends Controller
     public function store(StoreCategoriesRequest $request)
     {
         $request->validate([
-            'CategoryName' => ['required', 'max:255', 'unique:categories,name'],
-            'Description' => [''],
+            'CategoryName' => ['required', 'string', 'max:255', 'unique:categories,name'],
+            'Description' => ['string'],
             'image' => ['required', 'mimes:jpg, jpeg, png'],
+            'CategoryParent'=>['nullable', 'int', 'exists:categories,id']
         ]);
 
-        $imageName = $this->moveImage($request->image);
+        $imageName = $request->file('image')->store('public/images');
 
         Category::create([
             'name' => $request->CategoryName,
@@ -94,11 +97,12 @@ class CategoriesController extends Controller
     public function update(UpdateCategoriesRequest $request, Category $category)
     {
         $request->validate([
-            'CategoryName' => ['required', 'max:255', 'unique:categories,name'],
-            'Description' => [''],
+            'CategoryName' => ['required','string', 'max:255',Rule::unique('categories', 'name')->ignore($category->id)],
+            'Description' => ['string'],
         ]);
         if (isset($request->image)) {
-            $imageName = $this->moveImage($request->image);
+            \Storage::delete($category->image);
+           $imageName = $request->file('image')->store('public/images');
         } else {
             $imageName = $category->image;
         }
@@ -111,10 +115,9 @@ class CategoriesController extends Controller
             'description' => $request->Description,
             'parent_id' => $request->CategoryParent,
             'image' => $imageName,
-
         ]);
-
-        return redirect()->route('dashboard.categories.index')->with('success', 'The category was upateded successfully');
+        notify()->success('The category was upateded successfully');
+        return redirect()->route('dashboard.categories.index');
     }
 
     /**

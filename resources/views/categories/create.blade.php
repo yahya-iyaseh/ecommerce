@@ -36,7 +36,7 @@
               <label for="CategoryName">Category Name</label>
             </div>
             <div class="col-md-8">
-              <input type="text" name="CategoryName" id="CategoryName" class="form-control @error('CategoryName') isInvalid @enderror">
+              <input type="text" name="CategoryName" id="CategoryName" class="form-control @error('CategoryName') is-invalid @enderror" value="{{ old('CategoryName')}}">
               @error('CategoryName')
                 <span class="invalid-feedback d-block" role="alert"><strong>{{ $message }}</strong></span>
               @enderror
@@ -47,10 +47,12 @@
               <label for="CategoryParent">Category Parent</label>
             </div>
             <div class="col-md-8">
-              <select type="text" name="CategoryParent" id="CategoryParent" class="form-control @error('CategoryParent') isInvalid @enderror">
+              <select type="text" name="CategoryParent" id="CategoryParent" class="form-control @error('CategoryParent') is-invalid @enderror">
                 <option value="" selected>No Parent</option>
                 @foreach (DB::table('categories')->get() as $category)
-                  <option value="{{ $category->id }}">{{ $category->name }}</option>
+                  <option value="{{ $category->id }}" @if ( $category->id == old('CategoryParent'))
+                        selected
+                  @endif>{{ $category->name }}</option>
                 @endforeach)
 
               </select>
@@ -64,7 +66,7 @@
               <label for="Description">Description</label>
             </div>
             <div class="col-md-8">
-              <textarea type="text" name="Description" id="Description" class="form-control @error('Description') isInvalid @enderror"></textarea>
+              <textarea type="text" name="Description" id="Description" class="form-control @error('Description') is-invalid @enderror">{{ old('Description') }}</textarea>
               @error('Description')
                 <span class="invalid-feedback d-block" role="alert"><strong>{{ $message }}</strong></span>
               @enderror
@@ -80,7 +82,7 @@
             </div>
             <div class="col-md-8">
 
-              <input type="file" name="image" id="image" class="form-control @error('image') isInvalid @enderror">
+              <input type="file" name="image" id="image" class="form-control @error('image') is-invalid @enderror">
               @error('image')
                 <span class="invalid-feedback d-block" role="alert"><strong>{{ $message }}</strong></span>
               @enderror

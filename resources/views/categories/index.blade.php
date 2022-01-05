@@ -20,29 +20,30 @@
   @parent
   <div class="col">
     @if (Session::has('success'))
-    @if (Session::has('type') == 'warning')
-      <div class="alert alert-warning" role="alert">{{ Session::get('success') }}</div>
-    @else
-      <div class="alert alert-success" role="alert">{{ Session::get('success') }}</div>
+      @if (Session::has('type') == 'warning')
+        <div class="alert alert-warning" role="alert">{{ Session::get('success') }}</div>
+      @else
+        <div class="alert alert-success" role="alert">{{ Session::get('success') }}</div>
 
-    @endif
+      @endif
     @endif
     <a href="{{ route('dashboard.categories.create') }}" class="btn btn-outline-primary text-light p-2 mb-2">Create New</a>
     <table class="table">
       <tr>
-        <td></td>
-        <td>ID</td>
-        <td>Name</td>
-        <td>Parent</td>
-        <td>Created At</td>
-        <td colspan="2" class="text-center">actions</td>
+        <th>ID</th>
+        <th>Name</th>
+        <th>Parent</th>
+        <th>Created At</th>
+        <th>Image</th>
+
+        <th class="text-center">actions</th>
       </tr>
 
 
 
       @foreach ($categories as $key => $category)
         <tr>
-          <td>{{ $category->image }}</td>
+
           <td>{{ $key + 1 }}</td>
           <td>{{ $category->name }}</td>
           @if (isset($category->parent->name))
@@ -52,17 +53,28 @@
           @endif
 
           <td>{{ $category->created_at }}</td>
-          <td>
-            <a href="{{ route('dashboard.categories.edit', $category->id) }}" class="btn btn-outline-success">Edit</a>
-                        </form>
+          <td><img src="{{ Storage::url($category->image) }}" alt="{{ $category->image }}" width="100"></td>
 
-            <form action="{{ route('dashboard.categories.destroy', $category->id) }}" method="post">
-              @csrf
-              @method('DELETE')
-          </td>
           <td>
-            <button type="submit" class="btn btn-outline-danger btn-sm">Remove</button>
+            <div class="row">
+              <div class="col-md-6">
+                <a href="{{ route('dashboard.categories.edit', $category->id) }}" class="btn btn-outline-success btn-sm mb-2 mb-md-0 w-full"><i class="far fa-edit"></i></a>
+                </form>
+              </div>
+              <div class="col-md-6">
+                <form action="{{ route('dashboard.categories.destroy', $category->id) }}" method="post">
+                  @csrf
+                  @method('DELETE')
+                  <button type="submit" class="btn btn-outline-danger btn-sm w-full"><i class="far fa-trash-alt"></i></button>
+                </form>
+              </div>
+            </div>
+
+
+
           </td>
+
+
         </tr>
       @endforeach
     </table>
