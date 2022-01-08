@@ -30,3 +30,7 @@ Route::resource('categories', CategoriesController::class, [
     //     'store' => 'dashboard.categories.store',
     // ],
 ]);
+
+Route::get('test', function () {
+  
+});

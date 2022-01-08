@@ -28,7 +28,7 @@
     @endif
     <form action="{{ route('dashboard.categories.update', $category->id) }}" method="POST" enctype="multipart/form-data">
       @csrf
-        @method('PUT')
+      @method('PUT')
       <div class="row">
         <div class="row col-md-8">
           <div class="form-group mb-3 row col-12">
@@ -50,9 +50,9 @@
               <select type="text" name="CategoryParent" id="CategoryParent" class="form-control @error('CategoryParent') is-invalid @enderror">
                 <option value="" selected>No Parent</option>
                 @foreach (DB::table('categories')->get() as $item)
-                @if ($item->id !== $category->id)
-                                  <option value="{{ $item->id }}" @if($category->parent_id == $item->id) selected @endif>{{ $item->name }}</option>
-                @endif
+                  @if ($item->id !== $category->id)
+                    <option value="{{ $item->id }}" @if ($category->parent_id == $item->id) selected @endif>{{ $item->name }}</option>
+                  @endif
                 @endforeach)
               </select>
               @error('CategoryParent')
@@ -81,11 +81,12 @@
             </div>
             <div class="col-md-8">
 
-              <input type="file" name="image" id="image" class="form-control @error('image') is-invalid @enderror">
+              <input type="file" name="image" id="image" class="form-control d-none @error('image') is-invalid @enderror" onchange="document.getElementById('out').src = window.URL.createObjectURL(this.files[0])">
               @error('image')
                 <span class="invalid-feedback d-block" role="alert"><strong>{{ $message }}</strong></span>
               @enderror
-              <img src="{{ Storage::url($category->image) }}" alt="{{ $category->image }}" width="220" class="mt-2 img-responsive mx-auto">
+              <label for="image"><img src="{{ Storage::url($category->image) }}" alt="{{ $category->image }}" width="220" class="mt-2 img-responsive mx-auto" id="out">
+              </label>
             </div>
           </div>
         </div>

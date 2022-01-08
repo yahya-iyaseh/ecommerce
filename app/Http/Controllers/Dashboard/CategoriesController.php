@@ -10,6 +10,7 @@ use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Storage;
 use App\Http\Requests\StoreCategoriesRequest;
 use App\Http\Requests\UpdateCategoriesRequest;
+use Illuminate\Validation\ValidationException;
 
 class CategoriesController extends Controller
 {
@@ -48,7 +49,7 @@ class CategoriesController extends Controller
             'CategoryName' => ['required', 'string', 'max:255', 'unique:categories,name'],
             'Description' => ['string'],
             'image' => ['required', 'mimes:jpg, jpeg, png'],
-            'CategoryParent'=>['nullable', 'int', 'exists:categories,id']
+            'CategoryParent' => ['nullable', 'int', 'exists:categories,id']
         ]);
 
         $imageName = $request->file('image')->store('public/images');
@@ -96,13 +97,23 @@ class CategoriesController extends Controller
      */
     public function update(UpdateCategoriesRequest $request, Category $category)
     {
+
         $request->validate([
-            'CategoryName' => ['required','string', 'max:255',Rule::unique('categories', 'name')->ignore($category->id)],
+            'CategoryName' => ['required', 'string', 'max:255', Rule::unique('categories', 'name')->ignore($category->id)],
             'Description' => ['string'],
         ]);
-        if (isset($request->image)) {
-            \Storage::delete($category->image);
-           $imageName = $request->file('image')->store('public/images');
+        if ($request->hasFile('image')) {
+
+            $imageName = $request->file('image');
+            if ($imageName->isValid()) {
+                $oldImage = $category->image;
+                $imageName = $imageName->store('public/images');
+                \Storage::delete($oldImage);
+            } else {
+                throw ValidationException::withMessages([
+                    'image' => 'File crupotted',
+                ])->withInput();
+            }
         } else {
             $imageName = $category->image;
         }
