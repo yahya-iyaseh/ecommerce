@@ -1,11 +1,13 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
-use App\Http\Controllers\Dashboard\CategoriesController;
+use App\Http\Controllers\Dashboard\ProductsController;
 use App\Http\Controllers\Dashboard\DashboardController;
+use App\Http\Controllers\Dashboard\CategoriesController;
 
 /*
-|--------------------------------------------------------------------------
+|----------------------------------------------------------------------
+----
 | Web Routes
 |--------------------------------------------------------------------------
 |
@@ -15,22 +17,32 @@ use App\Http\Controllers\Dashboard\DashboardController;
 |
 */
 
+
 Route::get('/', function () {
     return view('welcome');
 });
 
 
 Route::get('/admin/dashboard', [DashboardController::class, 'index'])->name('admin/dashboard');
-// CRUD: Create, Read, Update and Delete routes
-Route::resource('categories', CategoriesController::class, [
-    'as' => 'dashboard'
-    // 'names' => [
-    //     'index' => 'dashboard.categories.index',
-    //     'create' => 'dashboard.categories.create',
-    //     'store' => 'dashboard.categories.store',
-    // ],
-]);
 
+Route::prefix('dashboard')->group(function () {
+
+    Route::group(['as' => 'dashboard.categories.',], function () {
+        Route::get('/categories/{id}/restore', [CategoriesController::class, 'restore'])->name('restore');
+    });
+    Route::group(['as' => 'dashboard.products.'], function () {
+        Route::get('/products/{id}/restore', [ProductsController::class, 'restore'])->name('restore');
+    });
+    // Dashboard categories
+    Route::resource('categories', CategoriesController::class, [
+        'as' => 'dashboard',
+
+    ]);
+
+    // Dashboard Products
+    Route::resource('/products', ProductsController::class, [
+        'as' => 'dashboard',
+    ]);
+});
 Route::get('test', function () {
-  
 });

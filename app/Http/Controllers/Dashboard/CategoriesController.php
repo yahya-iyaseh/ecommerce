@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Dashboard;
 use App\Models\Category;
 use Illuminate\Support\Str;
 
+use Illuminate\Http\Request;
 use Illuminate\Validation\Rule;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Storage;
@@ -20,9 +21,9 @@ class CategoriesController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Request $request)
     {
-        $categories = Category::latest()->paginate(10);
+        $categories = Category::search($request->search)->showDelete($request->deleteItems)->latest()->paginate(10);
         return view('categories.index', compact('categories'));
     }
 
@@ -33,7 +34,6 @@ class CategoriesController extends Controller
      */
     public function create()
     {
-
         return view('categories.create');
     }
 
@@ -60,7 +60,6 @@ class CategoriesController extends Controller
             'description' => $request->Description,
             'parent_id' => $request->CategoryParent,
             'image' => $imageName,
-
         ]);
         notify()->success('Category was created successfully ⚡️');
         return redirect()->route('dashboard.categories.index');
@@ -97,7 +96,6 @@ class CategoriesController extends Controller
      */
     public function update(UpdateCategoriesRequest $request, Category $category)
     {
-
         $request->validate([
             'CategoryName' => ['required', 'string', 'max:255', Rule::unique('categories', 'name')->ignore($category->id)],
             'Description' => ['string'],
@@ -137,12 +135,28 @@ class CategoriesController extends Controller
      * @param  \App\Models\Category  $category
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Category $category)
+    public function destroy($id)
     {
-        $category->delete();
-        return redirect()->route('dashboard.categories.index')->with('success', 'The category was deleted successfully')->with('type', 'warning');
+        $category = Category::withTrashed()->find($id);
+        if ($category->trashed()) {
+            $oldImage = $category->image;
+            $category->forceDelete();
+            \Storage::delete($oldImage);
+            notify()->success('Delete Category', 'Category deleted Successfully');
+            return redirect()->route('dashboard.categories.index');
+        } else {
+            $category->delete();
+            notify()->success('Delete Category', 'Category moved to trash Successfully');
+            return redirect()->route('dashboard.categories.index');
+        }
     }
-
+    public function restore($id)
+    {
+        $category = Category::onlyTrashed()->findOrFail($id);
+        $category->restore();
+        notify()->success('Category Restore', 'Category was restored successfully');
+        return redirect()->route('dashboard.categories.index');
+    }
     public function moveImage($image)
     {
 

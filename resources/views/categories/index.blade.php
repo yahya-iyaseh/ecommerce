@@ -19,15 +19,25 @@
 
   @parent
   <div class="col">
-    @if (Session::has('success'))
-      @if (Session::has('type') == 'warning')
-        <div class="alert alert-warning" role="alert">{{ Session::get('success') }}</div>
-      @else
-        <div class="alert alert-success" role="alert">{{ Session::get('success') }}</div>
+    <div class="d-flex justify-content-between">
+      <div class="">
+        <form class="form-group row" action="{{ route('dashboard.categories.index') }}" method="get">
+          <input type="text" name="search" class="form-control mr-2 col-4" placeholder="Name Category" value="{{ request('search') }}">
+          <select name="deleteItems" id="" class="form-control mr-2 col-4">
+            <option value="">Exists Items</option>
+            <option value="true" @if (request('deleteItems'))
+              selected
+              @endif>Deleted Items</option>
+          </select>
+          <button type="submit" class="btn col-3 btn-success">Search</button>
+        </form>
 
-      @endif
-    @endif
-    <a href="{{ route('dashboard.categories.create') }}" class="btn btn-outline-primary text-light p-2 mb-2">Create New</a>
+      </div>
+
+      <div class="">
+        <a href="{{ route('dashboard.categories.create') }}" class="btn btn-outline-primary text-light p-2 mb-2">Create New</a>
+      </div>
+    </div>
     <table class="table">
       <tr>
         <th>ID</th>
@@ -58,11 +68,15 @@
           <td>
             <div class="row">
               <div class="col-md-6">
-                <a href="{{ route('dashboard.categories.edit', $category->id) }}" class="btn btn-outline-success btn-sm mb-2 mb-md-0 w-full"><i class="far fa-edit"></i></a>
+                @if (request('deleteItems'))
+                  <a href="{{ route('dashboard.categories.restore', $category->id) }}" class="btn btn-outline-success btn-sm mb-2 mb-md-0 w-full"><i class="fa fa-trash-restore"></i></a>
+                @else
+                  <a href="{{ route('dashboard.categories.edit', $category->id) }}" class="btn btn-outline-success btn-sm mb-2 mb-md-0 w-full"><i class="far fa-edit"></i></a>
+                @endif
                 </form>
               </div>
               <div class="col-md-6">
-                <form action="{{ route('dashboard.categories.destroy', $category->id) }}" method="post">
+                <form action="{{ route('dashboard.categories.destroy', $category->id) }}" method="post" onsubmit="return confirm('Are you sure you want to destroy this category: {{ $category->name }}')">
                   @csrf
                   @method('DELETE')
                   <button type="submit" class="btn btn-outline-danger btn-sm w-full"><i class="far fa-trash-alt"></i></button>
