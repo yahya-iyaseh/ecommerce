@@ -30,8 +30,10 @@ class ProductsController extends Controller
      */
     public function create()
     {
-        return view('dashboard.products.create', [
-            'availablity' => Product::availablity(),
+
+        return view('products.create', [
+            'product' => new Product(),
+            'availablity' => Product::avaliablity(),
             'status' => Product::status(),
         ]);
     }
@@ -77,7 +79,7 @@ class ProductsController extends Controller
             'dashboard.product.edit',
             [
                 'product' => $product,
-                'availablity' => Product::availablity(),
+                'availablity' => Product::avaliablity(),
                 'status' => Product::status(),
             ]
         );
@@ -133,7 +135,12 @@ class ProductsController extends Controller
 
     public function rules($id = null)
     {
-        $id != null ?? $required = 'nullable' | 'required';
+        if($id){
+            $required = 'nullable';
+        }else{
+            $required = 'required';
+        }
+        // $id != null ?? $required = 'nullable' | 'required';
         return [
             'name' => ['required', 'string', 'max:255', Rule::unique('products', 'name')->ignore($id)],
             'category_id' => ['required', 'int', 'exists:categories,id'],

@@ -22,7 +22,7 @@
     <div class="d-flex justify-content-between">
       <div class="">
         <form class="form-group row" action="{{ route('dashboard.products.index') }}" method="get">
-          <input type="text" name="search" class="form-control mr-2 col-4" placeholder="Name product" value="{{ request('search') }}">
+          <input type="text" name="search" class="form-control mr-2 col-4" placeholder="Product Name" value="{{ request('search') }}">
           <select name="deleteItems" id="" class="form-control mr-2 col-4">
             <option value="">Exists Products</option>
             <option value="true" @if (request('deleteItems'))
@@ -49,16 +49,19 @@
         <th>Status</th>
         <th class="text-center">actions</th>
       </tr>
-
-
-
       @foreach ($products as $key => $product)
         <tr>
 
           <td>{{ $key + 1 }}</td>
           <td>{{ $product->name }}</td>
           <td>{{ $product->category_id }}</td>
-          <td>{{ $product->price }}</td>
+
+          <td>
+            @if ($product->compare_price)
+              <span class="text-info">({{ $product->compare_price }}), </span>
+            @endif
+            {{ $product->price }}
+          </td>
           <td>{{ $product->quantity }}</td>
           <td>{{ $product->sku }}</td>
           <td>{{ $product->status }}</td>
