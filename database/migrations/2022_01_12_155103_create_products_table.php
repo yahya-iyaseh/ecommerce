@@ -31,7 +31,7 @@ class CreateProductsTable extends Migration
             $table->string('sku')->unique()->nullable();
             $table->string('barcode')->unique()->nullable();
             $table->enum('status', ['active', 'draft', 'archived']);
-            $table->enum('availablity', ['in-stock', 'out-of-stock', 'back-order'])->default('in-stock');
+            $table->enum('availability', ['in-stock', 'out-of-stock', 'back-order'])->default('in-stock');
             $table->timestamps();
             $table->softDeletes();
         });

@@ -29,7 +29,7 @@ scratch. This page gets rid of all links and provides the needed markup only.
     } */
 
   </style>
-  @yield('styles')
+  @stack('styles')
 </head>
 
 <body class="hold-transition sidebar-mini dark-mode">
@@ -217,7 +217,7 @@ scratch. This page gets rid of all links and provides the needed markup only.
           <nav class="mt-2">
             <ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu" data-accordion="false">
               <!-- Add icons to the links using the .nav-icon class
-                     with font-awesome or any other icon font library -->
+                         with font-awesome or any other icon font library -->
               <li class="nav-item menu-open">
                 <a href="#" class="nav-link active">
                   <i class="nav-icon fas fa-tachometer-alt"></i>
@@ -289,7 +289,6 @@ scratch. This page gets rid of all links and provides the needed markup only.
           <div class="container-fluid">
             <div class="row">
               <div class="col-12">
-                <h2>parent</h2>
 
               </div>
               <br>

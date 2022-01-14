@@ -47,6 +47,8 @@
         <th>Qty.</th>
         <th>SKU</th>
         <th>Status</th>
+        <th>Created At</th>
+        <th>Image</th>
         <th class="text-center">actions</th>
       </tr>
       @foreach ($products as $key => $product)
@@ -64,11 +66,30 @@
           </td>
           <td>{{ $product->quantity }}</td>
           <td>{{ $product->sku }}</td>
-          <td>{{ $product->status }}</td>
+          <td>
+            @if ($product->status == 'active')
+              <span class="bg-success p-1 rounded"> {{ $product->status }}</span>
+            @elseif ($product->status == 'draft')
+              <span class="bg-warning p-1 rounded"> {{ $product->status }}</span>
+            @elseif ($product->status == 'archived')
+              <span class="bg-danger p-1 rounded"> {{ $product->status }}</span>
+
+            @endif
+
+          </td>
 
 
           <td>{{ $product->created_at }}</td>
-          <td><img src="{{ Storage::url($product->image) }}" alt="{{ $product->image }}" width="100"></td>
+          <td>
+            @if ($product->image)
+              <img src="{{ Storage::url($product->image) }}" alt="{{ $product->image }}" width="100">
+
+            @else
+              <img src="{{ asset('images/noImage.npg') }}" alt="{{ $product->image }}" width="100">
+
+            @endif
+
+          </td>
 
           <td>
             <div class="row">

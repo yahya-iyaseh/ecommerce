@@ -15,7 +15,7 @@ class Product extends Model
     protected $with = ['category'];
     protected $fillable = [
         'name', 'slug', 'category_id', 'description', 'additional_info', 'image', 'price',
-        'compare_price', 'cost', 'quantity', 'sku', 'barcode', 'status', ' availablity'
+        'compare_price', 'cost', 'quantity', 'sku', 'barcode', 'status', ' availability '
     ];
 
     public function scopeSearch($query, $value)
@@ -30,7 +30,8 @@ class Product extends Model
             $query->onlyTrashed();
         }
     }
-    public static function avaliablity()
+
+    public static function availability()
     {
         return [
             'in-stock' => 'In-Stock',
@@ -38,7 +39,7 @@ class Product extends Model
             'back-order' => 'Back-Order',
         ];
     }
-    public static function status()
+    public static function getStatus()
     {
         return [
             'active' => 'Active',

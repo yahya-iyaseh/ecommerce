@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Dashboard;
 
 use App\Models\Product;
+use Illuminate\Support\Str;
 use Illuminate\Http\Request;
 use Illuminate\Validation\Rule;
 use App\Http\Controllers\Controller;
@@ -33,8 +34,8 @@ class ProductsController extends Controller
 
         return view('products.create', [
             'product' => new Product(),
-            'availablity' => Product::avaliablity(),
-            'status' => Product::status(),
+            'availability' => Product::availability(),
+            'getStatus' => Product::getStatus(),
         ]);
     }
 
@@ -53,7 +54,7 @@ class ProductsController extends Controller
         $data['slug'] = Str::slug($data['name']);
         Product::create($data);
         notify()->success('Create Product', 'Product created successfully');
-        return redirect()->route('dashboard.categories.index');
+        return redirect()->route('dashboard.products.index');
     }
 
     /**
@@ -79,8 +80,8 @@ class ProductsController extends Controller
             'dashboard.product.edit',
             [
                 'product' => $product,
-                'availablity' => Product::avaliablity(),
-                'status' => Product::status(),
+                'availability' => Product::availability(),
+                'getStatus' => Product::getStatus(),
             ]
         );
     }
@@ -107,7 +108,7 @@ class ProductsController extends Controller
         $product->update($data);
         $oldImage != null ?? \Storage::delete($oldImage) | null;
         notify()->success('Update Product', 'Product updated successfully');
-        return redirect()->route('dashboard.categories.index');
+        return redirect()->route('dashboard.products.index');
     }
 
     /**
@@ -147,7 +148,7 @@ class ProductsController extends Controller
             'price' => ['required', 'numeric', 'min:0',],
             'compare_price' => ['nullable', 'numeric', 'gt:price'],
             'status' => ['in:active,draft,archived',],
-            'avaliablity' => ['in:in-stock,out-of-stock,back-order',],
+            'availability' => ['in:in-stock,out-of-stock,back-order',],
             'quantity' => ['nullable', 'int', 'min:0'],
             'sku' => ['nullable', 'string', Rule::unique('products', 'sku')->ignore($id)],
             'barcode' => ['nullable', 'string', 'unique:products,barcode'],
