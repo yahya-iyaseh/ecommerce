@@ -31,7 +31,6 @@ class ProductsController extends Controller
      */
     public function create()
     {
-
         return view('products.create', [
             'product' => new Product(),
             'availability' => Product::availability(),
@@ -75,7 +74,6 @@ class ProductsController extends Controller
      */
     public function edit($id)
     {
-        // dd($id);
         $product = Product::findOrFail($id);
         return view(
             'products.edit',
@@ -96,7 +94,6 @@ class ProductsController extends Controller
      */
     public function update(Request $request, Product $product)
     {
-
         $this->validate($request, $this->rules($product->id));
         if ($request->hasFile('image')) {
             $newImage = $request->file('image')->store('public/products');

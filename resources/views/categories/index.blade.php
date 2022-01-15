@@ -40,11 +40,11 @@
     </div>
     <table class="table">
       <tr>
+        <th>Image</th>
         <th>ID</th>
         <th>Name</th>
         <th>Parent</th>
         <th>Created At</th>
-        <th>Image</th>
 
         <th class="text-center">actions</th>
       </tr>
@@ -53,7 +53,13 @@
 
       @foreach ($categories as $key => $category)
         <tr>
-
+            <td>
+          @if ($category->image)
+            <img src="{{ Storage::url($category->image) }}" alt="{{ $category->image }}" width="100">
+          @else
+            <img src="{{ asset('images/noImage.npg') }}" alt="{{ $category->image }}" width="100">
+          @endif
+          </td>
           <td>{{ $key + 1 }}</td>
           <td>{{ $category->name }}</td>
           @if (isset($category->parent->name))
@@ -63,7 +69,6 @@
           @endif
 
           <td>{{ $category->created_at }}</td>
-          <td><img src="{{ Storage::url($category->image) }}" alt="{{ $category->image }}" width="100"></td>
 
           <td>
             <div class="row">

@@ -40,6 +40,7 @@
     </div>
     <table class="table">
       <tr>
+        <th>Product Image</th>
         <th>ID</th>
         <th>Name</th>
         <th>Category</th>
@@ -48,16 +49,20 @@
         <th>SKU</th>
         <th>Status</th>
         <th>Created At</th>
-        <th>Image</th>
         <th class="text-center">actions</th>
       </tr>
       @foreach ($products as $key => $product)
         <tr>
-
+          <td>
+            @if ($product->image)
+              <img src="{{ Storage::url($product->image) }}" alt="{{ $product->image }}" width="100">
+            @else
+              <img src="{{ asset('images/noImage.npg') }}" alt="{{ $product->image }}" width="100">
+            @endif
+          </td>
           <td>{{ $key + 1 }}</td>
           <td>{{ $product->name }}</td>
           <td>{{ $product->category_id }}</td>
-
           <td>
             @if ($product->compare_price)
               <span class="text-info">({{ $product->compare_price }}), </span>
@@ -73,24 +78,9 @@
               <span class="bg-warning px-1 rounded"> {{ $product->status }}</span>
             @elseif ($product->status == 'archived')
               <span class="bg-danger px-1 rounded"> {{ $product->status }}</span>
-
             @endif
-
           </td>
-
-
           <td>{{ $product->created_at }}</td>
-          <td>
-            @if ($product->image)
-              <img src="{{ Storage::url($product->image) }}" alt="{{ $product->image }}" width="100">
-
-            @else
-              <img src="{{ asset('images/noImage.npg') }}" alt="{{ $product->image }}" width="100">
-
-            @endif
-
-          </td>
-
           <td>
             <div class="row">
               <div class="col-md-6">
