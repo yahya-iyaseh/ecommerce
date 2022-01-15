@@ -52,8 +52,8 @@ class ProductsController extends Controller
         $imageName = $request->file('image')->store('public/products');
         $data['image'] = $imageName;
         $data['slug'] = Str::slug($data['name']);
-        Product::create($data);
-        notify()->success('Create Product', 'Product created successfully');
+        $product = Product::create($data);
+        notify()->success('Create Product', "Product ({$product->name}) created successfully");
         return redirect()->route('dashboard.products.index');
     }
 
@@ -75,9 +75,10 @@ class ProductsController extends Controller
      */
     public function edit($id)
     {
+        // dd($id);
         $product = Product::findOrFail($id);
         return view(
-            'dashboard.product.edit',
+            'products.edit',
             [
                 'product' => $product,
                 'availability' => Product::availability(),
@@ -97,7 +98,7 @@ class ProductsController extends Controller
     {
 
         $this->validate($request, $this->rules($product->id));
-        if ($request->image) {
+        if ($request->hasFile('image')) {
             $newImage = $request->file('image')->store('public/products');
             $oldImage = $product->image;
         } else {
@@ -106,8 +107,10 @@ class ProductsController extends Controller
         $data = $request->except('image');
         $data['image'] = $newImage;
         $product->update($data);
-        $oldImage != null ?? \Storage::delete($oldImage) | null;
-        notify()->success('Update Product', 'Product updated successfully');
+        if(isset($oldImage)){
+            \Storage::delete($oldImage);
+        }
+        notify()->success('Update Product', "Product ({$product->name}) updated successfully");
         return redirect()->route('dashboard.products.index');
     }
 
@@ -119,26 +122,32 @@ class ProductsController extends Controller
      */
     public function destroy($id)
     {
-        $product = Product::onlyTrashed()->findOrFail($id);
+        $product = Product::withTrashed()->findOrFail($id);
 
         if ($product->trashed()) {
             $product->forceDelete();
-            notify()->success('Delete Product', 'Product was successfully Deleted');
+            notify()->success('Delete Product', "Product ({$product->name}) was successfully Deleted");
             return redirect()->route('dashboard.products.index');
         } else {
 
             $product->delete();
-            notify()->success('Remove Product', 'Product was successfully Removed');
+            notify()->success('Remove Product', "Product ({$product->name}) was successfully Removed");
             return redirect()->route('dashboard.products.index');
         }
     }
-
+    public function restore($id)
+    {
+        $product = Product::onlyTrashed()->find($id);
+        $product->restore();
+        notify()->success('Restore Product', "Product ({$product->name}) was successfully restored");
+        return redirect()->route('dashboard.products.index');
+    }
 
     public function rules($id = null)
     {
-        if($id){
+        if ($id) {
             $required = 'nullable';
-        }else{
+        } else {
             $required = 'required';
         }
         // $id != null ?? $required = 'nullable' | 'required';
@@ -151,7 +160,7 @@ class ProductsController extends Controller
             'availability' => ['in:in-stock,out-of-stock,back-order',],
             'quantity' => ['nullable', 'int', 'min:0'],
             'sku' => ['nullable', 'string', Rule::unique('products', 'sku')->ignore($id)],
-            'barcode' => ['nullable', 'string', 'unique:products,barcode'],
+            'barcode' => ['nullable', 'string', Rule::unique('products', 'barcode')->ignore($id)],
             'image' => [$required, 'image'],
         ];
     }

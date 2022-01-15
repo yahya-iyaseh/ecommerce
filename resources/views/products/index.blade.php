@@ -68,11 +68,11 @@
           <td>{{ $product->sku }}</td>
           <td>
             @if ($product->status == 'active')
-              <span class="bg-success p-1 rounded"> {{ $product->status }}</span>
+              <span class="bg-success px-1 rounded"> {{ $product->status }}</span>
             @elseif ($product->status == 'draft')
-              <span class="bg-warning p-1 rounded"> {{ $product->status }}</span>
+              <span class="bg-warning px-1 rounded"> {{ $product->status }}</span>
             @elseif ($product->status == 'archived')
-              <span class="bg-danger p-1 rounded"> {{ $product->status }}</span>
+              <span class="bg-danger px-1 rounded"> {{ $product->status }}</span>
 
             @endif
 
@@ -95,14 +95,14 @@
             <div class="row">
               <div class="col-md-6">
                 @if (request('deleteItems'))
-                  {{-- <a href="{{ route('dashboard.products.restore', $product->id) }}" class="btn btn-outline-success btn-sm mb-2 mb-md-0 w-full"><i class="fa fa-trash-restore"></i></a> --}}
+                  <a href="{{ route('dashboard.products.restore', $product->id) }}" class="btn btn-outline-success btn-sm mb-2 mb-md-0 w-full"><i class="fa fa-trash-restore"></i></a>
                 @else
                   <a href="{{ route('dashboard.products.edit', $product->id) }}" class="btn btn-outline-success btn-sm mb-2 mb-md-0 w-full"><i class="far fa-edit"></i></a>
                 @endif
                 </form>
               </div>
               <div class="col-md-6">
-                <form action="{{ route('dashboard.products.destroy', $product->id) }}" method="post">
+                <form action="{{ route('dashboard.products.destroy', $product->id) }}" method="post" onsubmit='return confirm("Are you sure you want to destroy this product ({{ $product->name }})?")'>
                   @csrf
                   @method('DELETE')
                   <button type="submit" class="btn btn-outline-danger btn-sm w-full"><i class="far fa-trash-alt"></i></button>
