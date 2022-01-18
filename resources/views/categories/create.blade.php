@@ -29,78 +29,7 @@
     <form action="{{ route('dashboard.categories.store') }}" method="POST" enctype="multipart/form-data">
       @csrf
 
-      <div class="row">
-        <div class="row col-md-8">
-          <div class="form-group mb-3 row col-12">
-            <div class="col-md-4">
-              <label for="CategoryName">Category Name</label>
-            </div>
-            <div class="col-md-8">
-              <input type="text" name="CategoryName" id="CategoryName" class="form-control @error('CategoryName') is-invalid @enderror" value="{{ old('CategoryName')}}">
-              @error('CategoryName')
-                <span class="invalid-feedback d-block" role="alert"><strong>{{ $message }}</strong></span>
-              @enderror
-            </div>
-          </div>
-          <div class="form-group mb-3 row col-12">
-            <div class="col-md-4">
-              <label for="CategoryParent">Category Parent</label>
-            </div>
-            <div class="col-md-8">
-              <select type="text" name="CategoryParent" id="CategoryParent" class="form-control @error('CategoryParent') is-invalid @enderror">
-                <option value="" selected>No Parent</option>
-                @foreach (DB::table('categories')->get() as $category)
-                  <option value="{{ $category->id }}" @if ( $category->id == old('CategoryParent'))
-                        selected
-                  @endif>{{ $category->name }}</option>
-                @endforeach)
-
-              </select>
-              @error('CategoryParent')
-                <span class="invalid-feedback d-block" role="alert"><strong>{{ $message }}</strong></span>
-              @enderror
-            </div>
-          </div>
-          <div class="form-group mb-3 row col-12">
-            <div class="col-md-4">
-              <label for="Description">Description</label>
-            </div>
-            <div class="col-md-8">
-              <textarea type="text" name="Description" id="Description" class="form-control @error('Description') is-invalid @enderror">{{ old('Description') }}</textarea>
-              @error('Description')
-                <span class="invalid-feedback d-block" role="alert"><strong>{{ $message }}</strong></span>
-              @enderror
-            </div>
-          </div>
-
-
-        </div>
-        <div class="row col-md-4">
-          <div class="form-group mb-3 row col-12">
-            <div class="col-md-4">
-              <label for="image">Thumbnail</label>
-            </div>
-            <div class="col-md-8">
-
-              <input type="file" name="image" id="image" class="form-control @error('image') is-invalid @enderror">
-              @error('image')
-                <span class="invalid-feedback d-block" role="alert"><strong>{{ $message }}</strong></span>
-              @enderror
-            </div>
-          </div>
-        </div>
-
-        <div class="row col-12">
-          <div class="form-group mb-3 col-12">
-            <button type="submit" class="btn btn-success w-25 mx-2">add</button>
-            <a href="{{ route('dashboard.categories.index') }}" class="btn btn-outline-dark mx-2">cancel</a>
-          </div>
-        </div>
-
-
-
-
-      </div>
+     @include('categories._form', ['title' => 'create'])
     </form>
   </div>
 

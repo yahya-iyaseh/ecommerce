@@ -3,7 +3,7 @@
      <div class="row col-md-8">
 
        <div class="form-group mb-3 col-12">
-         <x-form.input name="name" title="Product Name" :value="$product->name" />
+         <x-form.input name="name" title="Product Name" :value="$product->name" required="1"/>
        </div>
 
        <div class="form-group col-12 mb-3">

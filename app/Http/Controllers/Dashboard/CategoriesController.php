@@ -2,9 +2,10 @@
 
 namespace App\Http\Controllers\Dashboard;
 
-use App\Models\Category;
-use Illuminate\Support\Str;
 
+use App\Models\Category;
+
+use Illuminate\Support\Str;
 use Illuminate\Http\Request;
 use Illuminate\Validation\Rule;
 use App\Http\Controllers\Controller;
@@ -15,7 +16,9 @@ use Illuminate\Validation\ValidationException;
 
 class CategoriesController extends Controller
 {
-
+    public function __construct(){
+        $this->middleware('auth');
+    }
     /**
      * Display a listing of the resource.
      *
@@ -34,7 +37,8 @@ class CategoriesController extends Controller
      */
     public function create()
     {
-        return view('categories.create');
+        $category = new Category();
+        return view('categories.create', compact('category'));
     }
 
     /**

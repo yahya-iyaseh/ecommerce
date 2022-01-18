@@ -6,8 +6,7 @@ use App\Http\Controllers\Dashboard\DashboardController;
 use App\Http\Controllers\Dashboard\CategoriesController;
 
 /*
-|----------------------------------------------------------------------
-----
+|--------------------------------------------------------------------------
 | Web Routes
 |--------------------------------------------------------------------------
 |
@@ -16,7 +15,6 @@ use App\Http\Controllers\Dashboard\CategoriesController;
 | contains the "web" middleware group. Now create something great!
 |
 */
-
 
 Route::get('/', function () {
     return view('welcome');
@@ -44,5 +42,14 @@ Route::prefix('dashboard')->group(function () {
         'as' => 'dashboard',
     ]);
 });
-Route::get('test', function () {
-});
+
+
+Route::get('/dashboard', function () {
+    return view('dashboard.dashboard');
+})->middleware(['auth'])->name('dashboard');
+
+
+
+
+
+require __DIR__.'/auth.php';
