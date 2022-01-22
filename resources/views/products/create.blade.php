@@ -36,6 +36,7 @@
     @csrf
 
         @include('products._form', ['type' => 'Create'])
+        
     </form>
 
 

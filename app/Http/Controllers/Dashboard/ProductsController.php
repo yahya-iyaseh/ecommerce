@@ -53,7 +53,7 @@ class ProductsController extends Controller
         $this->validate($request, $this->rules());
         $imageName = $request->file('image')->store('public/products');
         $data['image'] = $imageName;
-        $data['slug'] = Str::slug($data['name']);
+        // $data['slug'] = Str::slug($data['name']);
         $product = Product::create($data);
         notify()->success('Create Product', "Product ({$product->name}) created successfully");
         return redirect()->route('dashboard.products.index');

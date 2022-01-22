@@ -3,6 +3,7 @@
 namespace App\Models;
 
 use App\Models\Category;
+use Illuminate\Support\Str;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
@@ -18,6 +19,14 @@ class Product extends Model
         'compare_price', 'cost', 'quantity', 'sku', 'barcode', 'status', ' availability '
     ];
 
+    protected static function booted(){
+        static::saving(function($product){
+            $product->slug = Str::slug($product->name);
+        });
+        static::forceDeleted(function($product){
+            \Storage::delete($product->image);
+        });
+    }
     public function scopeSearch($query, $value)
     {
         if ($value) {

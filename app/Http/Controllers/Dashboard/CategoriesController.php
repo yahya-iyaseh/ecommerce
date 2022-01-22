@@ -60,8 +60,7 @@ class CategoriesController extends Controller
 
         Category::create([
             'name' => $request->CategoryName,
-            'slug' => Str::slug($request->CategoryName),
-            'description' => $request->Description,
+     'description' => $request->Description,
             'parent_id' => $request->CategoryParent,
             'image' => $imageName,
         ]);
@@ -124,7 +123,6 @@ class CategoriesController extends Controller
 
         $category->update([
             'name' => $request->CategoryName,
-            'slug' => Str::slug($request->CategoryName),
             'description' => $request->Description,
             'parent_id' => $request->CategoryParent,
             'image' => $imageName,
@@ -143,9 +141,7 @@ class CategoriesController extends Controller
     {
         $category = Category::withTrashed()->find($id);
         if ($category->trashed()) {
-            $oldImage = $category->image;
             $category->forceDelete();
-            \Storage::delete($oldImage);
             notify()->success('Delete Category', 'Category deleted Successfully');
             return redirect()->route('dashboard.categories.index');
         } else {

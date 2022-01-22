@@ -4,6 +4,7 @@ namespace App\Models;
 
 
 use App\Models\Product;
+use Illuminate\Support\Str;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
@@ -14,7 +15,14 @@ class Category extends Model
     use SoftDeletes;
     // protected $with = ['parent', 'childs'];
     protected $guarded = [];
-
+    protected static function booted(){
+        static::forceDeleted(function($category){
+                \Storage::delete($category->image);
+        });
+        static::saving(function($category){
+            $category->slug = Str::slug($category->name);
+        });
+    }
     public function scopeSearch($query, $value)
     {
         if ($value) {

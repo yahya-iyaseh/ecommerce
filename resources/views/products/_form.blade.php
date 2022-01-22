@@ -58,7 +58,11 @@
          </div>
        </div>
        <div class="form-group col-12">
-                      <x-form.input name="description" :value="$product->description" type="text" title="Description" />
+              <label class="form-label" >Description</label>
+
+           <textarea name="description" id="description" cols="30" rows="10">
+            {!!  $product->description !!}
+           </textarea>
        </div>
 
      </div>
