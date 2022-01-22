@@ -1,9 +1,11 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\Auth\UserProfileController;
 use App\Http\Controllers\Dashboard\ProductsController;
 use App\Http\Controllers\Dashboard\DashboardController;
 use App\Http\Controllers\Dashboard\CategoriesController;
+use App\Http\Controllers\Auth\ChangeUserPasswordController;
 
 /*
 |--------------------------------------------------------------------------
@@ -43,6 +45,10 @@ Route::prefix('dashboard')->group(function () {
     ]);
 });
 
+Route::get('/profile', [UserProfileController::class, 'index'])->name('profile')->middleware(['auth']);
+Route::post('/profile/update', [UserProfileController::class, 'update'])->name('profile.update')->middleware(['auth', 'password.confirm']);
+Route::get('/change-password', [ChangeUserPasswordController::class, 'index'])->name('change-password')->middleware(['auth']);
+Route::post('/profile/update', [ChangeUserPasswordController::class, 'update'])->name('change-password.update')->middleware(['auth']);
 
 Route::get('/dashboard', function () {
     return view('dashboard.dashboard');
@@ -52,4 +58,4 @@ Route::get('/dashboard', function () {
 
 
 
-require __DIR__.'/auth.php';
+require __DIR__ . '/auth.php';
