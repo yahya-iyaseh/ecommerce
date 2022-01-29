@@ -13,7 +13,7 @@
        <select type="text" name="CategoryParent" id="CategoryParent" class="form-control @error('CategoryParent') is-invalid @enderror">
          <option value="" selected>No Parent</option>
          @foreach (DB::table('categories')->get() as $key => $value)
-           <option value="{{ $value->id }}" @if ($value->id == old('CategoryParent', $category->id))
+           <option value="{{ $value->id }}" @if ($value->id == old('CategoryParent', $category->parent_id))
              selected
          @endif>{{ $value->name }}</option>
          @endforeach)
@@ -39,11 +39,7 @@
    <div class="col-md-4 text-center">
      <label for="image">
        Thumbnail
-       @if ($category->image)
-         <img src="{{ Storage::url($category->image) }}" alt="Uploded Image" id="blah" class="mx-auto mt-2" width="250">
-       @else
-         <img src="{{ asset('images/noImage.png') }}" alt="Uploded Image" id="blah" class="mx-auto mt-2" width="250">
-       @endif
+         <img src="{{ $category->image_url }}" alt="Uploded Image" id="blah" class="mx-auto mt-2" width="250">
      </label>
      <input type="file" name="image" id="image" class="form-control d-none @error('image') is-invalid @enderror" onchange="document.getElementById('blah').src = window.URL.createObjectURL(this.files[0])">
      @error('image')

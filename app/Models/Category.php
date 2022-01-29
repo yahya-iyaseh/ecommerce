@@ -6,6 +6,7 @@ namespace App\Models;
 use App\Models\Product;
 use Illuminate\Support\Str;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Facades\Storage;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 
@@ -45,4 +46,30 @@ class Category extends Model
     public function products(){
         return $this->hasMany(Product::class);
     }
+
+    // Accessors: get{Name}Attribute
+    // $category->image_url
+    public function getImageUrlAttribute(){
+        if(! $this->image){
+            return asset('images/noImage.png');
+        }
+        if(Str::startsWith($this->image, ['https://', 'http://'])){
+            return $this->image;
+        }
+
+        return Storage::url($this->image);
+    }
+
+    // public function getNameAttribute($value){
+    //     return strtoupper($value);
+    // }
+
+    public function getNameAttribute($value){
+        return Str::title($value);
+    }
+
+    // Mutators: set{Name}Attribute
+        // public function setNameAttribute($value){
+        //     $this->attributes['name'] = Str::title($value);
+        // }
 }

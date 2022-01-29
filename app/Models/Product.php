@@ -60,4 +60,23 @@ class Product extends Model
     public function category(){
         return $this->belongsTo(Category::class);
     }
+
+    public function getImageUrlAttribute(){
+        if(!$this->image){
+            return asset('images/noImage.png');
+        }
+        if(Str::startsWith($this->image, ['https://', 'http://'])){
+            return $this->image;
+        }
+
+        return Storage::url($this->image);
+    }
+
+    public function getDiscountAttribute(){
+        if($this->compare_price){
+            return -number_format(( $this->compare_price -  $this->price) / $this->compare_price * 100, 1);
+        }
+
+        return 0;
+    }
 }

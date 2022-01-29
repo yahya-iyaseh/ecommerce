@@ -1,6 +1,7 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\HomeController;
 use App\Http\Controllers\Auth\UserProfileController;
 use App\Http\Controllers\Dashboard\ProductsController;
 use App\Http\Controllers\Dashboard\DashboardController;
@@ -18,9 +19,7 @@ use App\Http\Controllers\Auth\ChangeUserPasswordController;
 |
 */
 
-Route::get('/', function () {
-    return view('welcome');
-});
+Route::get('/', [HomeController::class, 'index'])->name('home');
 
 
 Route::get('/admin/dashboard', [DashboardController::class, 'index'])->name('admin/dashboard');
@@ -54,7 +53,9 @@ Route::get('/dashboard', function () {
     return view('dashboard.dashboard');
 })->middleware(['auth'])->name('dashboard');
 
-
+Route::get('test', function(){
+    return view('layouts.store');
+});
 
 
 
