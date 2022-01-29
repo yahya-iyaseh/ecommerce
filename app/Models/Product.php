@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use App\Models\Tag;
 use App\Models\Category;
 use Illuminate\Support\Str;
 use Illuminate\Database\Eloquent\Model;
@@ -60,7 +61,9 @@ class Product extends Model
     public function category(){
         return $this->belongsTo(Category::class);
     }
-
+    public function tags(){
+        return $this->belongsToMany(Tag::class, 'product_tag');
+    }
     public function getImageUrlAttribute(){
         if(!$this->image){
             return asset('images/noImage.png');

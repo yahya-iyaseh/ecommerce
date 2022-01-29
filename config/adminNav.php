@@ -7,24 +7,28 @@ return [
     'dashboard' => [
         'title' => 'Dashboard',
         'route' => '/dashboard',
+        'route.active' => 'dashboard',
         'icon' => 'nav-icon fas fa-th',
         'new' => false,
     ],
-    'dashboard2' => [
-        'title' => 'Dashboard2',
-        'route' => '/dashboard',
+    'Categories' => [
+        'title' => 'Categories',
+        'route' => '/dashboard/categories',
+        'route.active' => 'dashboard.categories.*',
         'icon' => 'nav-icon fas fa-th',
         'new' => false,
     ],
-    'dashboard3' => [
-        'title' => 'Dashboard3',
-        'route' => '/dashboard',
+    'Products' => [
+        'title' => 'Products',
+        'route' => '/dashboard/products',
+        'route.active' => 'dashboard.products.*',
         'icon' => 'nav-icon fas fa-th',
-        'new' => true,
+        'new' => false,
     ],
-    'dashboard4' => [
+    'Orders' => [
         'title' => 'Dashboard4',
-        'route' => '/dashboard',
+        'route' => '/orders',
+        'route.active' => 'dashboard.order.*',
         'icon' => 'nav-icon fas fa-th',
         'new' => true,
     ],

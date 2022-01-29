@@ -8,13 +8,19 @@ use Illuminate\Http\Request;
 
 class ProductsController extends Controller
 {
-    public function index($category_id = null){
-        if($category_id){
-            $category = Category::findOrFail($category_id);
-            return view('store.products.index', ['category' => $category, 'products' => $category->products->paginate()]);
+    public function index(Category $category = null)
+    {
+        if ($category) {
+
+            return view('store.products.index', ['category' => $category, 'products' => $category->products()->latest()->paginate(10)]);
         }
-        $products = Product::latest()->paginate();
+        // Eager Loading
+        $products = Product::latest()->paginate(10);
 
         return view('store.products.index', ['category' => new Category, 'products' => $products]);
+    }
+    public function show(Category $category, Product $product)
+    {
+        return view('store.products.show', compact('category', 'product'));
     }
 }

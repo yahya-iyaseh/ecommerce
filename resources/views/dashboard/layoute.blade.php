@@ -252,7 +252,7 @@ scratch. This page gets rid of all links and provides the needed markup only.
 
               @foreach (config('adminNav') as $item)
                 <li class="nav-item">
-                  <a href="{{ $item['route'] }}" class="nav-link">
+                  <a href="{{ $item['route'] }}" class="nav-link @if( Route::is($item['route.active'])  ) active @endif">
                     <i class="{{ $item['icon'] }}"></i>
                     <p>
                       {{ $item['title'] }}

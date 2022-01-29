@@ -8,8 +8,15 @@
     @csrf
     @method('post')
     <div class="row w-100">
-      <div class="col-12 mt-3">
+        <div class="col-6">
         <x-form.input type="text" name="name" title="Name" :value="$user->name" class="form-control" />
+
+        </div>
+        <div class="col-6">
+        <x-form.input type="text" name="name" title="Name" :value="$user->name" class="form-control" />
+
+        </div>
+      <div class="col-12 mt-3">
 
       </div>
       <div class="col-12 mt-3">
