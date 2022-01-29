@@ -87,13 +87,8 @@
        <div class="form-group mb-3 col-12 text-center">
          <label for="image">
            Thumbnail
-           @if ($product->image)
-             <img src="{{ Storage::url($product->image) }}" alt="Uploded Image" id="blah" class="mx-auto mt-2" width="350">
+             <img src="{{ $product->image }}" alt="Uploded Image" id="blah" class="mx-auto mt-2" width="350">
 
-           @else
-             <img src="{{ asset('images/noImage.png') }}" alt="Uploded Image" id="blah" class="mx-auto mt-2" width="350">
-
-           @endif
          </label>
          <input type="file" name="image" id="image" class="form-control d-none @error('image') is-invalid @enderror" onchange="document.getElementById('blah').src = window.URL.createObjectURL(this.files[0])">
          @error('image')

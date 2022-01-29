@@ -54,11 +54,9 @@
       @foreach ($categories as $key => $category)
         <tr>
             <td>
-          @if ($category->image)
-            <img src="{{ Storage::url($category->image) }}" alt="{{ $category->image }}" width="100">
-          @else
-            <img src="{{ asset('images/noImage.npg') }}" alt="{{ $category->image }}" width="100">
-          @endif
+
+            <img src="{{ $category->image_url }}" alt="{{ $category->image }}" width="100">
+
           </td>
           <td>{{ $key + 1 }}</td>
           <td>{{ $category->name }}</td>

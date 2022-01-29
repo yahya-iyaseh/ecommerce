@@ -54,11 +54,8 @@
       @foreach ($products as $key => $product)
         <tr>
           <td>
-            @if ($product->image)
-              <img src="{{ Storage::url($product->image) }}" alt="{{ $product->image }}" width="100">
-            @else
-              <img src="{{ asset('images/noImage.npg') }}" alt="{{ $product->image }}" width="100">
-            @endif
+              <img src="{{ $product->image_url }}" alt="{{ $product->image }}" width="100">
+
           </td>
           <td>{{ $key + 1 }}</td>
           <td>{{ $product->name }}</td>
@@ -85,9 +82,9 @@
             <div class="row">
               <div class="col-md-6">
                 @if (request('deleteItems'))
-                  <a href="{{ route('dashboard.products.restore', $product->id) }}" class="btn btn-outline-success btn-sm mb-2 mb-md-0 w-full"><i class="fa fa-trash-restore"></i></a>
+                  <a href="{{ route('dashboard.products.restore', $product->id) }}" class="btn btn-outline-success btn-sm mb-2 mb-md-0 w-full text-center"><i class="fa fa-trash-restore"></i></a>
                 @else
-                  <a href="{{ route('dashboard.products.edit', $product->id) }}" class="btn btn-outline-success btn-sm mb-2 mb-md-0 w-full"><i class="far fa-edit"></i></a>
+                  <a href="{{ route('dashboard.products.edit', $product->id) }}" class="btn btn-outline-success btn-sm mb-2 mb-md-0 w-full text-center"><i class="far fa-edit"></i></a>
                 @endif
                 </form>
               </div>
@@ -95,7 +92,7 @@
                 <form action="{{ route('dashboard.products.destroy', $product->id) }}" method="post" onsubmit='return confirm("Are you sure you want to destroy this product ({{ $product->name }})?")'>
                   @csrf
                   @method('DELETE')
-                  <button type="submit" class="btn btn-outline-danger btn-sm w-full"><i class="far fa-trash-alt"></i></button>
+                  <button type="submit" class="btn btn-outline-danger btn-sm w-full text-center"><i class="far fa-trash-alt"></i></button>
                 </form>
               </div>
             </div>

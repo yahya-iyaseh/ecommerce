@@ -120,13 +120,14 @@ class CategoriesController extends Controller
         }
 
 
-
         $category->update([
             'name' => $request->CategoryName,
             'description' => $request->Description,
             'parent_id' => $request->CategoryParent,
             'image' => $imageName,
         ]);
+        
+
         notify()->success('The category was upateded successfully');
         return redirect()->route('dashboard.categories.index');
     }
