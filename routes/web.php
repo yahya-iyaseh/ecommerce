@@ -22,7 +22,7 @@ use App\Http\Controllers\Auth\ChangeUserPasswordController;
 
 Route::get('/', [HomeController::class, 'index'])->name('home');
 Route::get('/products/{category:slug?}', [StoreProductsController::class, 'index'])->name('products');
-Route::get('/product/{category:slug}/{product:slug', [StoreProductsController::class, 'show'])->name('products.show');
+Route::get('/products/{category:slug}/{product:slug}', [StoreProductsController::class, 'show'])->name('products.show');
 Route::get('/admin/dashboard', [DashboardController::class, 'index'])->name('admin/dashboard');
 
 Route::prefix('dashboard')->group(function () {
@@ -48,7 +48,7 @@ Route::prefix('dashboard')->group(function () {
 Route::get('/profile', [UserProfileController::class, 'index'])->name('profile')->middleware(['auth']);
 Route::post('/profile/update', [UserProfileController::class, 'update'])->name('profile.update')->middleware(['auth', 'password.confirm']);
 Route::get('/change-password', [ChangeUserPasswordController::class, 'index'])->name('change-password')->middleware(['auth']);
-Route::post('/profile/update', [ChangeUserPasswordController::class, 'update'])->name('change-password.update')->middleware(['auth']);
+Route::post('/profile/update/password', [ChangeUserPasswordController::class, 'update'])->name('change-password.update')->middleware(['auth']);
 
 Route::get('/dashboard', function () {
     return view('dashboard.dashboard');

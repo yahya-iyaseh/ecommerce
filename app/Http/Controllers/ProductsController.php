@@ -12,10 +12,10 @@ class ProductsController extends Controller
     {
         if ($category) {
 
-            return view('store.products.index', ['category' => $category, 'products' => $category->products()->latest()->paginate(10)]);
+            return view('store.products.index', ['category' => $category, 'products' => $category->products()->latest()->paginate(12)]);
         }
         // Eager Loading
-        $products = Product::latest()->paginate(10);
+        $products = Product::latest()->paginate(12);
 
         return view('store.products.index', ['category' => new Category, 'products' => $products]);
     }

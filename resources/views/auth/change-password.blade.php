@@ -17,12 +17,12 @@
 
       </div>
       <div class="col-12 mt-3">
-        <x-form.input type="password" name="new_password_confimration" title="Confirm Password" :value="null" class="form-control" />
+        <x-form.input type="password" name="new_password_confirmation" title="Confirm Password" :value="null" class="form-control" />
 
       </div>
       <div class="col-12 mt-3">
          <button class="btn btn-success w-25">Update</button>
-
+        <a href="{{ route('profile') }}" class="btn btn-outline-dark">Back</a>
         </div>
       </div>
 

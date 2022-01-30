@@ -44,10 +44,12 @@
             </div>
             <h1>{{ $product->name }}</h1>
             <p class="ps-product__category"><a href="#"> {{ $category->name }}</a>,</p>
-            <h3 class="ps-product__price">$ {{ $product->price }}
+            <h3 class="ps-product__price"> {{ Money::format($product->price) }}
+
               @if ($product->compare_price)
 
-                <del>$ {{ $product->compare_price }}</del>
+                <del> {{ Money::format($product->compare_price) }}
+                </del>
 
               @endif
             </h3>

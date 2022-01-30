@@ -198,7 +198,7 @@ scratch. This page gets rid of all links and provides the needed markup only.
             </div>
             <div class="info">
               @auth
-                <a href="#" class="d-block">{{ Auth::user()->name }}</a>
+                <a href="{{ route('profile') }}" class="d-block">{{ Auth::user()->name }}</a>
                 <a href="{{ route('logout') }}" onclick="event.preventDefault(); document.getElementById('logout').submit()">Logout</a>
                 <form action="{{ route('logout') }}" method="POST" class="d-none" id="logout">
                   @csrf
