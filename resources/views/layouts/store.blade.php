@@ -33,6 +33,12 @@
   <link rel="stylesheet" href="{{ asset('template/plugins/revolution/css/navigation.css') }}">
   <!-- Custom-->
   <link rel="stylesheet" href="{{ asset('template/css/style.css') }}">
+    @notifyCss
+    <style>
+        .notify{
+            z-index: 999999 !important;
+        }
+    </style>
   <!--HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries-->
   <!--WARNING: Respond.js doesn't work if you view the page via file://-->
   <!--[if lt IE 9]><script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>___scripts_1___<![endif]-->
@@ -42,6 +48,7 @@
 <!--[if IE 9]><body class="ie9 lt-ie10"><![endif]-->
 
 <body class="ps-loading">
+     <x:notify-messages />
   <div class="header--sidebar"></div>
   <header class="header">
     <div class="header__top">
@@ -183,35 +190,7 @@
             <input class="form-control" type="text" placeholder="Search Product…">
             <button><i class="ps-icon-search"></i></button>
           </form>
-          <div class="ps-cart"><a class="ps-cart__toggle" href="#"><span><i>20</i></span><i class="ps-icon-shopping-cart"></i></a>
-            <div class="ps-cart__listing">
-              <div class="ps-cart__content">
-                <div class="ps-cart-item"><a class="ps-cart-item__close" href="#"></a>
-                  <div class="ps-cart-item__thumbnail"><a href="product-detail.html"></a><img src="images/cart-preview/1.jpg" alt=""></div>
-                  <div class="ps-cart-item__content"><a class="ps-cart-item__title" href="product-detail.html">{{ config('app.name') }}</a>
-                    <p><span>Quantity:<i>12</i></span><span>Total:<i>£176</i></span></p>
-                  </div>
-                </div>
-                <div class="ps-cart-item"><a class="ps-cart-item__close" href="#"></a>
-                  <div class="ps-cart-item__thumbnail"><a href="product-detail.html"></a><img src="images/cart-preview/2.jpg" alt=""></div>
-                  <div class="ps-cart-item__content"><a class="ps-cart-item__title" href="product-detail.html">The Crusty Croissant</a>
-                    <p><span>Quantity:<i>12</i></span><span>Total:<i>£176</i></span></p>
-                  </div>
-                </div>
-                <div class="ps-cart-item"><a class="ps-cart-item__close" href="#"></a>
-                  <div class="ps-cart-item__thumbnail"><a href="product-detail.html"></a><img src="images/cart-preview/3.jpg" alt=""></div>
-                  <div class="ps-cart-item__content"><a class="ps-cart-item__title" href="product-detail.html">The Rolling Pin</a>
-                    <p><span>Quantity:<i>12</i></span><span>Total:<i>£176</i></span></p>
-                  </div>
-                </div>
-              </div>
-              <div class="ps-cart__total">
-                <p>Number of items:<span>36</span></p>
-                <p>Item Total:<span>£528.00</span></p>
-              </div>
-              <div class="ps-cart__footer"><a class="ps-btn" href="cart.html">Check out<i class="ps-icon-arrow-left"></i></a></div>
-            </div>
-          </div>
+        <x-cart-menu />
           <div class="menu-toggle"><span></span></div>
         </div>
       </div>
@@ -368,6 +347,7 @@
   <script type="text/javascript" src="{{ asset('template/plugins/revolution/js/extensions/revolution.extension.actions.min.js') }}"></script>
   <!-- Custom scripts-->
   <script type="text/javascript" src="{{ asset('template/js/main.js') }}"></script>
+   @notifyJs
 </body>
 
 </html>

@@ -1,13 +1,14 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\CartController;
 use App\Http\Controllers\HomeController;
-use App\Http\Controllers\ProductsController as StoreProductsController;
 use App\Http\Controllers\Auth\UserProfileController;
+use App\Http\Controllers\Dashboard\ProductsController;
 use App\Http\Controllers\Dashboard\DashboardController;
 use App\Http\Controllers\Dashboard\CategoriesController;
-use App\Http\Controllers\Dashboard\ProductsController;
 use App\Http\Controllers\Auth\ChangeUserPasswordController;
+use App\Http\Controllers\ProductsController as StoreProductsController;
 
 /*
 |--------------------------------------------------------------------------
@@ -25,6 +26,10 @@ Route::get('/products/{category:slug?}', [StoreProductsController::class, 'index
 Route::get('/products/{category:slug}/{product:slug}', [StoreProductsController::class, 'show'])->name('products.show');
 Route::get('/admin/dashboard', [DashboardController::class, 'index'])->name('admin/dashboard');
 
+// Cart Routes
+
+Route::get('/cart', [CartController::class, 'index'])->name('cart');
+Route::post('/cart', [CartController::class, 'store']);
 Route::prefix('dashboard')->group(function () {
 
     Route::group(['as' => 'dashboard.categories.',], function () {

@@ -57,39 +57,48 @@
               <h4>QUICK REVIEW</h4>
               <p>{{ Str::words($product->description, 10) }}...</p>
             </div>
-            <div class="ps-product__block ps-product__style">
-              <h4>CHOOSE YOUR STYLE</h4>
-              <ul>
-                <li><a href="product-detail.html"><img src="images/shoe/sidebar/1.jpg" alt=""></a></li>
-                <li><a href="product-detail.html"><img src="images/shoe/sidebar/2.jpg" alt=""></a></li>
-                <li><a href="product-detail.html"><img src="images/shoe/sidebar/3.jpg" alt=""></a></li>
-                <li><a href="product-detail.html"><img src="images/shoe/sidebar/2.jpg" alt=""></a></li>
-              </ul>
-            </div>
-            <div class="ps-product__block ps-product__size">
-              <h4>CHOOSE SIZE<a href="#">Size chart</a></h4>
-              <select class="ps-select selectpicker">
-                <option value="1">Select Size</option>
-                <option value="2">4</option>
-                <option value="3">4.5</option>
-                <option value="3">5</option>
-                <option value="3">6</option>
-                <option value="3">6.5</option>
-                <option value="3">7</option>
-                <option value="3">7.5</option>
-                <option value="3">8</option>
-                <option value="3">8.5</option>
-                <option value="3">9</option>
-                <option value="3">9.5</option>
-                <option value="3">10</option>
-              </select>
-              <div class="form-group">
-                <input class="form-control" type="number" value="1">
+            <form action="{{ route('cart') }}" method="post">
+              @csrf
+              <div class="ps-product__block ps-product__style">
+                <h4>CHOOSE YOUR STYLE</h4>
+                <ul>
+                  <li><a href="product-detail.html"><img src="images/shoe/sidebar/1.jpg" alt=""></a></li>
+                  <li><a href="product-detail.html"><img src="images/shoe/sidebar/2.jpg" alt=""></a></li>
+                  <li><a href="product-detail.html"><img src="images/shoe/sidebar/3.jpg" alt=""></a></li>
+                  <li><a href="product-detail.html"><img src="images/shoe/sidebar/2.jpg" alt=""></a></li>
+                </ul>
               </div>
-            </div>
-            <div class="ps-product__shopping"><a class="ps-btn mb-10" href="cart.html">Add to cart<i class="ps-icon-next"></i></a>
-              <div class="ps-product__actions"><a class="mr-10" href="whishlist.html"><i class="ps-icon-heart"></i></a><a href="compare.html"><i class="ps-icon-share"></i></a></div>
-            </div>
+              <div class="ps-product__block ps-product__size">
+                <h4>CHOOSE SIZE<a href="#">Size chart</a></h4>
+                <select class="ps-select selectpicker">
+                  <option value="1">Select Size</option>
+                  <option value="2">4</option>
+                  <option value="3">4.5</option>
+                  <option value="3">5</option>
+                  <option value="3">6</option>
+                  <option value="3">6.5</option>
+                  <option value="3">7</option>
+                  <option value="3">7.5</option>
+                  <option value="3">8</option>
+                  <option value="3">8.5</option>
+                  <option value="3">9</option>
+                  <option value="3">9.5</option>
+                  <option value="3">10</option>
+                </select>
+                <div class="form-group">
+                  <input class="form-control" name="quantity" type="number" value="1">
+                </div>
+              </div>
+
+              @method('POST')
+              <input type="hidden" name="product_id" value="{{ $product->id }}" />
+              <div class="ps-product__shopping">
+                <button type="submit" class="ps-btn mb-10">Add to cart
+                  <i class="ps-icon-next"></i>
+                </button>
+                <div class="ps-product__actions"><a class="mr-10" href="whishlist.html"><i class="ps-icon-heart"></i></a><a href="compare.html"><i class="ps-icon-share"></i></a></div>
+              </div>
+            </form>
           </div>
           <div class="clearfix"></div>
           <div class="ps-product__content mt-50">

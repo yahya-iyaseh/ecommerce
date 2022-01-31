@@ -2,6 +2,9 @@
 
 namespace App\Models;
 
+
+use App\Models\Cart;
+use App\Models\Product;
 use App\Models\Profile;
 use Laravel\Sanctum\HasApiTokens;
 use Illuminate\Notifications\Notifiable;
@@ -45,5 +48,12 @@ class User extends Authenticatable implements MustVerifyEmail
 
     public function profile(){
         return $this->hasOne(Profile::class)->withDefault();
+    }
+    public function  cart()
+    {
+        return $this->hasMany(Cart::class, 'user_id', 'id');
+    }
+    public function cartProducts(){
+        return $this->belongsToMany(Product::class,'carts', 'user_id', 'product_id', 'id', 'id');
     }
 }

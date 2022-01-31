@@ -58,6 +58,9 @@ class Product extends Model
         ];
     }
 
+    public function cartUsers(){
+        return $this->belongsToMany(User::class,'carts', 'product_id', 'user_id', 'id', 'id');
+    }
     public function category(){
         return $this->belongsTo(Category::class);
     }
@@ -79,7 +82,9 @@ class Product extends Model
         if($this->compare_price){
             return -number_format(( $this->compare_price -  $this->price) / $this->compare_price * 100, 1);
         }
-
         return 0;
+    }
+    public function getUrlAttribute(){
+        return route('product.show', [$this->category->id, $this->id]);
     }
 }
