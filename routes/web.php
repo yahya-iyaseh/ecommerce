@@ -3,6 +3,7 @@
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\CartController;
 use App\Http\Controllers\HomeController;
+use App\Http\Controllers\CheckoutController;
 use App\Http\Controllers\Auth\UserProfileController;
 use App\Http\Controllers\Dashboard\ProductsController;
 use App\Http\Controllers\Dashboard\DashboardController;
@@ -28,8 +29,12 @@ Route::get('/admin/dashboard', [DashboardController::class, 'index'])->name('adm
 
 // Cart Routes
 
+
 Route::get('/cart', [CartController::class, 'index'])->name('cart');
 Route::post('/cart', [CartController::class, 'store']);
+Route::delete('/cart/{id}', [CartController::class, 'destroy'])->name('cart.destroy');
+
+
 Route::prefix('dashboard')->group(function () {
 
     Route::group(['as' => 'dashboard.categories.',], function () {
@@ -49,6 +54,11 @@ Route::prefix('dashboard')->group(function () {
         'as' => 'dashboard',
     ]);
 });
+
+
+// check out routes
+Route::get('/checkout', [CheckoutController::class, 'index'])->name('checkout.index');
+Route::post('/checkout', [CheckoutController::class, 'store'])->name('checkout.store');
 
 Route::get('/profile', [UserProfileController::class, 'index'])->name('profile')->middleware(['auth']);
 Route::post('/profile/update', [UserProfileController::class, 'update'])->name('profile.update')->middleware(['auth', 'password.confirm']);

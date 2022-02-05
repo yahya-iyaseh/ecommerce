@@ -2,9 +2,11 @@
 
 namespace App\Http\Controllers;
 
+use CartRepository;
 use App\Models\Cart;
 use Illuminate\Support\Str;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\App;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Cookie;
 
@@ -13,6 +15,11 @@ class CartController extends Controller
     // List of cart products (items)
     public function index()
     {
+        $cart = App::make(CartRepository::class);
+
+        return view('cart.index', [
+            'cart' => $cart
+        ]);
     }
 
     // Add product to cart
@@ -24,8 +31,9 @@ class CartController extends Controller
         ]);
         $cookie_id = app('cart.cookie_id');
         $item = Cart::where([
-                'product_id'=>  $request->post('product_id'),
-                  'cookie_id'=> $cookie_id])->first();
+            'product_id' =>  $request->post('product_id'),
+            'cookie_id' => $cookie_id
+        ])->first();
         if ($item) {
             $item->increment('quantity', $request->post('quantity'));
         } else {
@@ -42,5 +50,13 @@ class CartController extends Controller
         return redirect()->back();
     }
 
+    public function destroy($cookie){
+         Cart::where([
+            'id' => $cookie,
+        ])->delete();
+        notify()->success('Delete Product', 'Product deleted successfully');
+        return redirect()->route('cart');
 
+
+    }
 }

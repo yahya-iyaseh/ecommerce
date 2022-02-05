@@ -91,7 +91,7 @@
     <nav class="navigation">
       <div class="container-fluid">
         <div class="navigation__column left">
-          <div class="header__logo"><a class="ps-logo" href="index.html"><img src="images/logo.png" alt=""></a></div>
+          <div class="header__logo"><a class="ps-logo" href="index.html"><img src="{{ asset('template/images/logo.png') }}" alt=""></a></div>
         </div>
         <div class="navigation__column center">
           <ul class="main-menu menu">
@@ -225,13 +225,13 @@
         </div>
       </div>
     </div>
-    <div class="ps-footer bg--cover" data-background="images/background/parallax.jpg">
+    <div class="ps-footer bg--cover" data-background="{{ asset('template/images/background/parallax.jpg') }}">
       <div class="ps-footer__content">
         <div class="ps-container">
           <div class="row">
             <div class="col-lg-3 col-md-3 col-sm-12 col-xs-12 ">
               <aside class="ps-widget--footer ps-widget--info">
-                <header><a class="ps-logo" href="index.html"><img src="images/logo-white.png" alt=""></a>
+                <header><a class="ps-logo" href="index.html"><img src="#" alt=""></a>
                   <h3 class="ps-widget__title">Address Office 1</h3>
                 </header>
                 <footer>
@@ -337,7 +337,7 @@
   <script type="text/javascript" src="{{ asset('template/plugins/elevatezoom/jquery.elevatezoom.js') }}"></script>
   <script type="text/javascript" src="{{ asset('template/plugins/Magnific-Popup/dist/jquery.magnific-popup.min.js') }}"></script>
   <script type="text/javascript" src="{{ asset('template/plugins/jquery-ui/jquery-ui.min.js') }}"></script>
-  <script type="text/javascript" src="{{ asset('template/https://maps.googleapis.com/maps/api/js?key=AIzaSyAx39JFH5nhxze1ZydH-Kl8xXM3OK4fvcg&amp;region=GB') }}"></script>___scripts_16___
+  {{-- <script type="text/javascript" src="{{ asset('template/https://maps.googleapis.com/maps/api/js?key=AIzaSyAx39JFH5nhxze1ZydH-Kl8xXM3OK4fvcg&amp;region=GB') }}"></script>___scripts_16___ --}}
   <script type="text/javascript" src="{{ asset('template/plugins/revolution/js/jquery.themepunch.revolution.min.js') }}"></script>
   <script type="text/javascript" src="{{ asset('template/plugins/revolution/js/extensions/revolution.extension.video.min.js') }}"></script>
   <script type="text/javascript" src="{{ asset('template/plugins/revolution/js/extensions/revolution.extension.slideanims.min.js') }}"></script>
