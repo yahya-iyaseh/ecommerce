@@ -10,7 +10,7 @@ use App\Http\Controllers\Dashboard\DashboardController;
 use App\Http\Controllers\Dashboard\CategoriesController;
 use App\Http\Controllers\Auth\ChangeUserPasswordController;
 use App\Http\Controllers\ProductsController as StoreProductsController;
-
+use App\Repositories\Cart\CartRepository;
 /*
 |--------------------------------------------------------------------------
 | Web Routes

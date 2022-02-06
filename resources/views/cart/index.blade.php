@@ -31,7 +31,7 @@
                     <form action="{{ route('cart.destroy', $item->id) }}" method="POST">
                       @csrf
                       @method('DELETE')
-                      
+
                       <button type="submit" class="ps-remove"></button>
                     </form>
                   </td>
@@ -49,13 +49,13 @@
                 </div>
               </div>
               <div class="form-group">
-                <button class="ps-btn ps-btn--gray">Continue Shopping</button>
+                <a href="{{ url('/') }}" class="ps-btn ps-btn--gray">Continue Shopping</a>
               </div>
             </div>
             <div class="ps-cart__total">
               <h3>Total Price: <span> {{ Money::format($cart->total()) }}</span></h3>
 
-              <button type="submit" class="ps-btn" href="">Process to checkout<i class="ps-icon-next"></i></button>
+              <a href="{{ route('checkout.index') }}" type="submit" class="ps-btn" href="">Process to checkout<i class="ps-icon-next"></i></a>
 
 
             </div>

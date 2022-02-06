@@ -2,11 +2,12 @@
 
 namespace App\View\Components;
 
-use App\Models\Cart;
+
 use Illuminate\View\Component;
 use Illuminate\Support\Facades\App;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Cookie;
+use App\Repositories\Cart\CartRepository;
 
 class CartMenu extends Component
 {
@@ -20,7 +21,7 @@ class CartMenu extends Component
      */
     public function __construct()
     {
-        $cart = App::make('CartRepository');
+        $cart = App::make(CartRepository::class);
         $this->cart = $cart->all();
         $this->total = $cart->total();
         $this->quantity = $this->cart->sum('quantity');

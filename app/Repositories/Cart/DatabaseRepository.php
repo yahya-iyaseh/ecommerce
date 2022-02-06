@@ -2,6 +2,7 @@
 
 namespace App\Repositories\Cart;
 
+
 use App\Models\Cart;
 use Illuminate\Support\Str;
 use Illuminate\Support\Facades\Auth;
@@ -17,9 +18,12 @@ class DatabaseRepository implements CartRepository
 
     public function all()
     {
-        return $this->items = Cart::with('product')->where('cookie_id', app()->make('cart.cookie_id'))
+        if($this->items === null){
+        $this->items = Cart::with('product')->where('cookie_id', app()->make('cart.cookie_id'))
             ->orWhere('user_id', '=', Auth::id())
             ->get();
+        }
+        return $this->items;
     }
 
     public function add($item, $quantity = 1)

@@ -2,13 +2,13 @@
 
 namespace App\Providers;
 
-use CartRepository;
 use Illuminate\Support\Str;
 use Illuminate\Pagination\Paginator;
 use Illuminate\Support\Facades\Cookie;
 
 use Illuminate\Support\ServiceProvider;
 use App\Repositories\Cart\DatabaseRepository;
+use App\Repositories\Cart\CartRepository;
 
 
 class AppServiceProvider extends ServiceProvider

@@ -1,7 +1,7 @@
 <?php
 
-namespace App\Repositories\Cart;
 
+namespace App\Repositories\Cart;
 class SessionRepository implements CartRepository
 {
     public function all()

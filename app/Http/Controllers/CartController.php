@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers;
 
-use CartRepository;
+use App\Repositories\Cart\CartRepository;
 use App\Models\Cart;
 use Illuminate\Support\Str;
 use Illuminate\Http\Request;

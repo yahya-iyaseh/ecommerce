@@ -3,6 +3,7 @@
 namespace App\View\Components;
 
 use Illuminate\View\Component;
+use Illuminate\Support\Facades\App;
 
 class StoreLayout extends Component
 {
@@ -13,7 +14,7 @@ class StoreLayout extends Component
      */
     public function __construct()
     {
-        //
+
     }
 
     /**

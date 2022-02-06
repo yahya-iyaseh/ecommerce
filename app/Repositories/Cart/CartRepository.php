@@ -1,8 +1,6 @@
 <?php
 
-    namespace App\Repositories\Cart;
-
-
+namespace App\Repositories\Cart;
     interface CartRepository{
     public function all();
     public function add($item, $quantity = 1);
