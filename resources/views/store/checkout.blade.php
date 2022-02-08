@@ -1,45 +1,38 @@
 <x-Store-layout>
   <div class="ps-checkout pt-80 pb-80">
     <div class="ps-container">
-      <form class="ps-checkout__form" action="do_action" method="post">
+      <form class="ps-checkout__form" action="{{ route('checkout.store') }}" method="post">
+        @csrf
+        @method('POST')
         <div class="row">
           <div class="col-lg-8 col-md-8 col-sm-12 col-xs-12 ">
             <div class="ps-checkout__billing">
               <h3>Billing Detail</h3>
               <div class="form-group form-group--inline">
-                <label>First Name<span>*</span>
-                </label>
-                <input class="form-control" type="text">
+                <x-form.input name="shipping[first_name]" title="First Name" :value="$user->profile->first_name" required/>
               </div>
               <div class="form-group form-group--inline">
-                <label>Last Name<span>*</span>
-                </label>
-                <input class="form-control" type="text">
+                <x-form.input name="shipping[last_name]" title="Last Name" :value="$user->profile->last_name" required/>
+
               </div>
               <div class="form-group form-group--inline">
-                <label>Company Name<span>*</span>
-                </label>
-                <input class="form-control" type="text">
+                <x-form.input type="text" name="shipping[phone_number]" title="Phone Number" :value="$user->profile->phone" required/>
               </div>
               <div class="form-group form-group--inline">
-                <label>Email Address<span>*</span>
-                </label>
-                <input class="form-control" type="email">
+                <x-form.input type="email" name="shipping[email]" title="Email" :value="$user->email" required/>
+
               </div>
               <div class="form-group form-group--inline">
-                <label>Company Name<span>*</span>
-                </label>
-                <input class="form-control" type="text">
+                <x-form.input type="text" name="shipping[street]" title="Street Address" :value="$user->profile->address" required/>
+
               </div>
               <div class="form-group form-group--inline">
-                <label>Phone<span>*</span>
-                </label>
-                <input class="form-control" type="text">
+                <x-form.input type="text" name="shipping[city]" title="City" :value="$user->profile->city" required/>
+
               </div>
               <div class="form-group form-group--inline">
-                <label>Address<span>*</span>
-                </label>
-                <input class="form-control" type="text">
+                <x-form.select name="shipping[country_code]" title="Country" :value="$user->profile->country_code" required/>
+
               </div>
               <div class="form-group">
                 <div class="ps-checkbox">
@@ -82,7 +75,7 @@
                         Order Total:
                       </td>
                       <td>
-                       <u> {{ Money::format($total) }}</u>
+                        <u> {{ Money::format($total) }}</u>
                       </td>
                     </tr>
 
@@ -109,7 +102,7 @@
                     <li><a href="#"><img src="images/payment/2.png" alt=""></a></li>
                     <li><a href="#"><img src="images/payment/3.png" alt=""></a></li>
                   </ul>
-                  <button class="ps-btn ps-btn--fullwidth">Place Order<i class="ps-icon-next"></i></button>
+                  <button type="submit" class="ps-btn ps-btn--fullwidth">Place Order<i class="ps-icon-next"></i></button>
                 </div>
               </footer>
             </div>

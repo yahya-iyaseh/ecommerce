@@ -21,7 +21,7 @@ class CreateProfilesTable extends Migration
             $table->string('last_name');
             $table->enum('gender', ['male', 'female'])->nullable();
             $table->date('birth_date')->nullable();
-            $table->string('addreess')->nullable();
+            $table->string('address')->nullable();
             $table->string('city')->nullable();
             $table->char('country_code', 2);
             $table->char('locale', 2)->default(config('app.locale'));

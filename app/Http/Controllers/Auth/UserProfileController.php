@@ -17,6 +17,7 @@ class UserProfileController extends Controller
 
 
     public function update(Request $request){
+        // dd($request->address);
         $user = $request->user();
         $request->validate([
             'name' => ['required', 'string', 'max:255'],
@@ -33,7 +34,7 @@ class UserProfileController extends Controller
         }else{
             $profile->update($request->all());
         }
-        
+
         notify()->success('Update User', 'User updated successfully');
         return redirect()->route('profile');
     }

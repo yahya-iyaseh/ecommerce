@@ -5,6 +5,7 @@ namespace App\Listeners;
 use CartRepository;
 use Illuminate\Auth\Events\Login;
 use Illuminate\Support\Facades\App;
+use Illuminate\Support\Facades\Cookie;
 use Illuminate\Queue\InteractsWithQueue;
 use Illuminate\Contracts\Queue\ShouldQueue;
 
@@ -33,5 +34,7 @@ class UpdateCartUserId
         if(method_exists($cart, 'setCartUserId')){
         $cart->setCartUserId($user->id);
         }
+
+        Cookie::queue('cart_id', '', -24 * 60 * 365);
     }
 }

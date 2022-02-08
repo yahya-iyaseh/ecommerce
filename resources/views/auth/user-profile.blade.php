@@ -4,6 +4,11 @@
 @section('title', 'User Profile')
 
 @section('content')
+@if ($errors->any())
+    @foreach ($errors->all() as $error)
+    <p>{{ $error }}</p>
+    @endforeach
+@endif
     <a href="{{ route('change-password') }}" class="btn btn-outline-success ml-auto mr-5">Change Password</a>
   <form action="{{ route('profile.update') }}" method="post" class="col-12">
     @csrf
@@ -39,19 +44,7 @@
       </div>
 
       <div class="col-6 mt-2">
-
-         <label for="country_code">Country</label>
-         <select name="country_code" id="country_code" class="form-control @error('country_code') is-invalid @enderror">
-                        <option value="">Select Country</option>
-
-           @foreach (Symfony\Component\Intl\Countries::getNames() as $code => $value)
-             <option value="{{ $code }}" @if ($code == old('country_code', $user->profile->country_code)) selected @endif>{{ $value }}</option>
-           @endforeach
-         </select>
-         @error('country_code')
-           <span class="d-block invalid-feedback"><strong>{{ $message }}</strong></span>
-         @enderror
-
+        <x-form.select name="country_code" title="Country" :value="$user->profile->country_code" />
     </div>
 
       <div class="col-6 mt-2">
@@ -82,7 +75,10 @@
            <span class="d-block invalid-feedback"><strong>{{ $message }}</strong></span>
          @enderror
        </div>
+       <div class="col-12 mt-2">
+                           <x-form.input type="text" name="address" title="The Address" :value="$user->profile->address" />
 
+       </div>
 
 
     </div>
