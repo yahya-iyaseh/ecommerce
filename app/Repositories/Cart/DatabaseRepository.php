@@ -15,7 +15,18 @@ class DatabaseRepository implements CartRepository
     {
         $this->cookie_id = $cookie_id;
     }
+    // protected function query(){
+    //     $id= Auth::id();
+    //     $query = Cart::with('product');
 
+    //     if($id){
+    //         $query->where('user_id', $id);
+    //     }else{
+    //         $query->where('cookie_id', $this->$cookie_id);
+    //     }
+
+    //     return $query;
+    // }
     public function all()
     {
         if($this->items === null){

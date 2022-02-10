@@ -19,11 +19,12 @@ class Order extends Model
             $now =  Carbon::now();
             $number =  Order::whereYear('created_at', $now->year)->max('number');
             if(!$number){
-                $number = $now->year() . '00001';
+               $number = $now->year . '00001';
             }else{
                 $number++;
             }
-            $order->number = '';
+
+            $order->number = $number;
         });
     }
     public function user()

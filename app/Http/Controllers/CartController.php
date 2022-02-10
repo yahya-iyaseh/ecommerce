@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+
 use App\Repositories\Cart\CartRepository;
 use App\Models\Cart;
 use Illuminate\Support\Str;
@@ -47,7 +48,7 @@ class CartController extends Controller
         }
 
         notify()->success('Add Product', 'Product  added successfully');
-        return redirect()->back();
+        return redirect()->route('products');
     }
 
     public function destroy($cookie){

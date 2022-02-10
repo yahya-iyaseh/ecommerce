@@ -2,7 +2,7 @@
 
 namespace App\Listeners;
 
-use CartRepository;
+use App\Repositories\Cart\CartRepository;
 use Illuminate\Auth\Events\Login;
 use Illuminate\Support\Facades\App;
 use Illuminate\Support\Facades\Cookie;

@@ -14,6 +14,7 @@
               </tr>
             </thead>
             <tbody>
+                @if($cart->all()->count() > 0)
               @foreach ($cart->all() as $item)
                 <tr>
                   <td><a class="ps-product__preview" href="{{ route('products.show', [$item->product->category->slug, $item->product->slug]) }}"><img class="mr-15" src="{{ $item->product->image_url }}" width="70"
@@ -38,7 +39,9 @@
                 </tr>
 
               @endforeach
-
+                @else
+                <div class="alert alert-warning">There Are no Products <a href="{{ route('products') }}" class="text-primary ms-2">Add Some</a></div>
+                @endif
             </tbody>
           </table>
           <div class="ps-cart__actions">

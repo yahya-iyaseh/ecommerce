@@ -2,10 +2,11 @@
 
 namespace App\Listeners;
 
-use Illuminate\Contracts\Queue\ShouldQueue;
+use App\Events\OrderCreated;
 use Illuminate\Queue\InteractsWithQueue;
+use Illuminate\Contracts\Queue\ShouldQueue;
 
-class SendOrderCreatedEmaiilToAdmin
+class SendOrderCreatedEmailToAdmin
 {
     /**
      * Create the event listener.
@@ -23,8 +24,8 @@ class SendOrderCreatedEmaiilToAdmin
      * @param  object  $event
      * @return void
      */
-    public function handle($event)
+    public function handle(OrderCreated $event)
     {
-        //
+        dd($event->message);
     }
 }
