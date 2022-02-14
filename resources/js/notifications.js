@@ -9,7 +9,24 @@ window.Echo = new Echo({
     forceTLS: true
 });
 
-window.Echo.private('App.Models.User.' + userId)
+window.Echo.private('Notifications.' + userId)
     .notification((message) => {
-        alert(message.title)
+        let c = Number($('#unread-count').text())
+        c++
+        $('#unread-count').text(c)
+        console.log(c);
+        $('#n-list').prepend(`
+         <div class="dropdown-divider"></div>
+          <a href="#" class="dropdown-item">
+            <i class="fas fa-envelope mr-2"></i>${message.title}
+            <span class="float-right text-muted text-sm">now</span>
+          </a>
+        `)
+        $(document).Toasts('create', {
+            title: message.title,
+            body: message.body,
+            animation: true,
+            autohide: true,
+            delay: 3000,
+        })
     });

@@ -201,7 +201,7 @@ scratch. This page gets rid of all links and provides the needed markup only.
           <nav class="mt-2">
             <ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu" data-accordion="false">
               <!-- Add icons to the links using the .nav-icon class
-                                 with font-awesome or any other icon font library -->
+                                     with font-awesome or any other icon font library -->
               <li class="nav-item menu-open">
                 <a href="#" class="nav-link active">
                   <i class="nav-icon fas fa-tachometer-alt"></i>
@@ -227,7 +227,7 @@ scratch. This page gets rid of all links and provides the needed markup only.
 
               @foreach (config('adminNav') as $item)
                 <li class="nav-item">
-                  <a href="{{ $item['route'] }}" class="nav-link @if( Route::is($item['route.active'])  ) active @endif">
+                  <a href="{{ $item['route'] }}" class="nav-link @if (Route::is($item['route.active'])) active @endif">
                     <i class="{{ $item['icon'] }}"></i>
                     <p>
                       {{ $item['title'] }}
@@ -306,9 +306,20 @@ scratch. This page gets rid of all links and provides the needed markup only.
       </footer>
     </div>
     <!-- ./wrapper -->
-
     <!-- REQUIRED SCRIPTS -->
-
+<div aria-live="polite" aria-atomic="true" style="position: relative; min-height: 200px;">
+  <div class="toast" style="position: absolute; top: 0; right: 0;">
+    <div class="toast-header">
+      <img src="..." class="rounded mr-2" alt="...">
+      <strong class="mr-auto">New Order</strong>
+      <small></small>
+      <button type="button" class="ml-2 mb-1 close" data-dismiss="toast" aria-label="Close">
+        <span aria-hidden="true">&times;</span>
+      </button>
+    </div>
+    <div class="toast-body">
+    </div>
+  </div>
     <!-- jQuery -->
     <script src="{{ asset('plugins/jquery/jquery.min.js') }}"></script>
     <!-- Bootstrap 4 -->
@@ -316,7 +327,7 @@ scratch. This page gets rid of all links and provides the needed markup only.
     <!-- AdminLTE App -->
     <script src="{{ asset('dist/js/adminlte.min.js') }}"></script>
     <script>
-        const userId = "{{ Auth::id() }}";
+      const userId = "{{ Auth::id() }}";
     </script>
     <script src="{{ asset('js/notifications.js') }}"></script>
     @stack('scripts')

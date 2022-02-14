@@ -5,21 +5,23 @@
 @endsection
 
 @push('styles')
+  <style>
+    #messages {
+      max-height: 400px !important;
+      overflow: auto;
+    }
 
+  </style>
 @endpush
 
 @section('show')
-
 @endsection
 @section('breadcrumb')
-@parent
+  @parent
   Main Dashboard
 @endsection
 
 @section('content')
-
-
-
 @endsection
 
 

@@ -6230,8 +6230,19 @@ window.Echo = new laravel_echo__WEBPACK_IMPORTED_MODULE_0__["default"]({
   cluster: "ap2",
   forceTLS: true
 });
-window.Echo["private"]('App.Models.User.' + userId).notification(function (message) {
-  alert(message.title);
+window.Echo["private"]('Notifications.' + userId).notification(function (message) {
+  var c = Number($('#unread-count').text());
+  c++;
+  $('#unread-count').text(c);
+  console.log(c);
+  $('#n-list').prepend("\n         <div class=\"dropdown-divider\"></div>\n          <a href=\"#\" class=\"dropdown-item\">\n            <i class=\"fas fa-envelope mr-2\"></i>".concat(message.title, "\n            <span class=\"float-right text-muted text-sm\">now</span>\n          </a>\n        "));
+  $(document).Toasts('create', {
+    title: message.title,
+    body: message.body,
+    animation: true,
+    autohide: true,
+    delay: 3000
+  });
 });
 })();
 

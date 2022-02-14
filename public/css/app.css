@@ -731,6 +731,15 @@ select {
 .mb-2 {
   margin-bottom: 0.5rem;
 }
+.mr-2 {
+  margin-right: 0.5rem;
+}
+.mr-auto {
+  margin-right: auto;
+}
+.mb-1 {
+  margin-bottom: 0.25rem;
+}
 .mb-10 {
   margin-bottom: 2.5rem;
 }
@@ -742,9 +751,6 @@ select {
 }
 .mb-20 {
   margin-bottom: 5rem;
-}
-.mr-2 {
-  margin-right: 0.5rem;
 }
 .ml-6 {
   margin-left: 1.5rem;

@@ -56,4 +56,7 @@ class User extends Authenticatable implements MustVerifyEmail
     public function cartProducts(){
         return $this->belongsToMany(Product::class,'carts', 'user_id', 'product_id', 'id', 'id');
     }
+    public function receivesBroadcastNotificationsOn(){
+        return 'Notifications.' . $this->id;
+    }
 }
