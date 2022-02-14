@@ -4,9 +4,10 @@ namespace App\Notifications;
 
 use App\Models\Order;
 use Illuminate\Bus\Queueable;
+use Illuminate\Notifications\Notification;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Notifications\Messages\MailMessage;
-use Illuminate\Notifications\Notification;
+use Illuminate\Notifications\Messages\BroadcastMessage;
 
 class OrderCreatedNotification extends Notification
 {
@@ -32,7 +33,7 @@ class OrderCreatedNotification extends Notification
      */
     public function via($notifiable)
     {
-        return ['mail', 'database'];
+        return ['broadcast', 'mail', 'database'];
     }
 
     /**
@@ -71,7 +72,21 @@ class OrderCreatedNotification extends Notification
             'order' => $order
         ];
     }
-
+    public function toBroadcast($notifiable){
+        // Private Channel, Public Channel, Presence Channel
+        $order = $this->order;
+        $billing  = $this->order->addresses()->where('type', '=', 'billing')->first();
+        $line1 = "{$billing->first_name} {$billing->last_name} has placed a new order(#{$order->number}) on store " . config('app.name') . ".";
+        $url = url('/dashboard/orders/' . $order->id);
+        return new BroadcastMessage([
+            'title' =>  'New Order #' . $order->number,
+            'body' => $line1,
+            'image' => '',
+            'url' => $url,
+            // Custom Data
+            'order' => $order
+        ]);
+    }
     /**
      * Get the array representation of the notification.
      *

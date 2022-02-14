@@ -13,6 +13,7 @@
         "laravel/sanctum": "^2.11",
         "laravel/tinker": "^2.5",
         "mckenziearts/laravel-notify": "^2.2",
+        "pusher/pusher-php-server": "^7.0",
         "symfony/intl": "^6.0"
     },
     "require-dev": {

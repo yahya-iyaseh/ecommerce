@@ -9,6 +9,7 @@ use App\Http\Controllers\Dashboard\ProductsController;
 use App\Http\Controllers\Dashboard\DashboardController;
 use App\Http\Controllers\Dashboard\CategoriesController;
 use App\Http\Controllers\Auth\ChangeUserPasswordController;
+use App\Http\Controllers\Dashboard\NotificationsController;
 use App\Http\Controllers\ProductsController as StoreProductsController;
 /*
 |--------------------------------------------------------------------------
@@ -45,13 +46,14 @@ Route::prefix('dashboard')->group(function () {
     // Dashboard categories
     Route::resource('categories', CategoriesController::class, [
         'as' => 'dashboard',
-
     ]);
-
     // Dashboard Products
     Route::resource('/products', ProductsController::class, [
         'as' => 'dashboard',
     ]);
+    // Notifications
+    Route::get('/notifications', [NotificationsController::class, 'index'])->name('notifications');
+    Route::get('/notifications/{notification}', [NotificationsController::class, 'read'])->name('notifications.read');
 });
 
 
