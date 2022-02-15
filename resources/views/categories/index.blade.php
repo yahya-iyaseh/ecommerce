@@ -12,7 +12,7 @@
 @endpush
 
 @section('breadcrumb')
-  Categories
+  {{ __("Categories") }}
 @endsection
 
 @section('content')
@@ -24,29 +24,29 @@
         <form class="form-group row" action="{{ route('dashboard.categories.index') }}" method="get">
           <input type="text" name="search" class="form-control mr-2 col-4" placeholder="Name Category" value="{{ request('search') }}">
           <select name="deleteItems" id="" class="form-control mr-2 col-4">
-            <option value="">Exists Items</option>
+            <option value="">@lang("Exists Items")</option>
             <option value="true" @if (request('deleteItems'))
               selected
-              @endif>Deleted Items</option>
+              @endif>@lang("Deleted Items")</option>
           </select>
-          <button type="submit" class="btn col-3 btn-success">Search</button>
+          <button type="submit" class="btn col-3 btn-success">@lang("Search")</button>
         </form>
 
       </div>
 
       <div class="">
-        <a href="{{ route('dashboard.categories.create') }}" class="btn btn-outline-primary text-light p-2 mb-2">Create New</a>
+        <a href="{{ route('dashboard.categories.create') }}" class="btn btn-outline-primary text-light p-2 mb-2">{{ __("Create New") }}</a>
       </div>
     </div>
     <table class="table">
       <tr>
-        <th>Image</th>
-        <th>ID</th>
-        <th>Name</th>
-        <th>Parent</th>
-        <th>Created At</th>
+        <th>{{ Lang::get("Image") }}</th>
+        <th>{{ trans("ID") }}</th>
+        <th> @lang("Name") </th>
+        <th>{{ __("Parent") }}</th>
+        <th>{{ __("Created At") }}</th>
 
-        <th class="text-center">actions</th>
+        <th class="text-center">{{ __("Actions") }}</th>
       </tr>
 
 

@@ -3,12 +3,13 @@
 namespace App\Providers;
 
 use Illuminate\Support\Str;
+use Illuminate\Support\Facades\App;
 use Illuminate\Pagination\Paginator;
-use Illuminate\Support\Facades\Cookie;
 
+use Illuminate\Support\Facades\Cookie;
 use Illuminate\Support\ServiceProvider;
-use App\Repositories\Cart\DatabaseRepository;
 use App\Repositories\Cart\CartRepository;
+use App\Repositories\Cart\DatabaseRepository;
 
 
 class AppServiceProvider extends ServiceProvider
@@ -44,5 +45,7 @@ class AppServiceProvider extends ServiceProvider
     {
         // Paginator::useBootstrap();
         Paginator::defaultView('paginations.index');
+
+        // App::setLocale(request('lang', 'en'));
     }
 }

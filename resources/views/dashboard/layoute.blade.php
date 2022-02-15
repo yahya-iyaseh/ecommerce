@@ -152,185 +152,212 @@ scratch. This page gets rid of all links and provides the needed markup only.
               <i class="fas fa-th-large"></i>
             </a>
           </li>
-        </ul>
-      </nav>
-      <!-- /.navbar -->
 
-      <!-- Main Sidebar Container -->
-      <aside class="main-sidebar sidebar-dark-primary elevation-4">
-        <!-- Brand Logo -->
-        <a href="index3.html" class="brand-link">
-          <img src="{{ asset('dist/img/AdminLTELogo.png') }}" alt="AdminLTE Logo" class="brand-image img-circle elevation-3" style="opacity: .8">
-          <span class="brand-text font-weight-light">AdminLTE 3</span>
-        </a>
+          {{-- Language --}}
+          <li class="nav-item dropdown">
+            <a class="nav-link" data-toggle="dropdown" href="#">
+              {{ __('Languages') }}
+            </a>
+            <div class="dropdown-menu dropdown-menu-lg dropdown-menu-right">
+              @foreach (LaravelLocalization::getSupportedLocales() as $localeCode => $properties)
+                 <a href="{{ LaravelLocalization::getLocalizedURL($localeCode, null, [], true) }}" class="dropdown-item">
+            <!-- Message Start -->
+            <div class="media">
+              <div class="media-body">
+                <h3 class="dropdown-item-title">
+              {{ $properties['native'] }}
 
-        <!-- Sidebar -->
-        <div class="sidebar">
-          <!-- Sidebar user panel (optional) -->
-          <div class="user-panel mt-3 pb-3 mb-3 d-flex">
-            <div class="image">
-              <img src="{{ asset('dist/img/user2-160x160.jpg') }}" class="img-circle elevation-2" alt="User Image">
-            </div>
-            <div class="info">
-              @auth
-                <a href="{{ route('profile') }}" class="d-block">{{ Auth::user()->name }}</a>
-                <a href="{{ route('logout') }}" onclick="event.preventDefault(); document.getElementById('logout').submit()">Logout</a>
-                <form action="{{ route('logout') }}" method="POST" class="d-none" id="logout">
-                  @csrf
-                </form>
-              @else
-                <a href="{{ route('login') }}" class="d-block">{{ _('login') }}</a>
-
-              @endauth
-            </div>
-          </div>
-
-          <!-- SidebarSearch Form -->
-          <div class="form-inline">
-            <div class="input-group" data-widget="sidebar-search">
-              <input class="form-control form-control-sidebar" type="search" placeholder="Search" aria-label="Search">
-              <div class="input-group-append">
-                <button class="btn btn-sidebar">
-                  <i class="fas fa-search fa-fw"></i>
-                </button>
               </div>
             </div>
+            <!-- Message End -->
+          </a>
+          <div class="dropdown-divider"></div>
+        
+          @endforeach
+
+
+    </div>
+    </li>
+
+    </ul>
+    </nav>
+    <!-- /.navbar -->
+
+    <!-- Main Sidebar Container -->
+    <aside class="main-sidebar sidebar-dark-primary elevation-4">
+      <!-- Brand Logo -->
+      <a href="index3.html" class="brand-link">
+        <img src="{{ asset('dist/img/AdminLTELogo.png') }}" alt="AdminLTE Logo" class="brand-image img-circle elevation-3" style="opacity: .8">
+        <span class="brand-text font-weight-light">AdminLTE 3</span>
+      </a>
+
+      <!-- Sidebar -->
+      <div class="sidebar">
+        <!-- Sidebar user panel (optional) -->
+        <div class="user-panel mt-3 pb-3 mb-3 d-flex">
+          <div class="image">
+            <img src="{{ asset('dist/img/user2-160x160.jpg') }}" class="img-circle elevation-2" alt="User Image">
           </div>
+          <div class="info">
+            @auth
+              <a href="{{ route('profile') }}" class="d-block">{{ Auth::user()->name }}</a>
+              <a href="{{ route('logout') }}" onclick="event.preventDefault(); document.getElementById('logout').submit()">Logout</a>
+              <form action="{{ route('logout') }}" method="POST" class="d-none" id="logout">
+                @csrf
+              </form>
+            @else
+              <a href="{{ route('login') }}" class="d-block">{{ _('login') }}</a>
 
-          <!-- Sidebar Menu -->
-          <nav class="mt-2">
-            <ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu" data-accordion="false">
-              <!-- Add icons to the links using the .nav-icon class
-                                     with font-awesome or any other icon font library -->
-              <li class="nav-item menu-open">
-                <a href="#" class="nav-link active">
-                  <i class="nav-icon fas fa-tachometer-alt"></i>
-                  <p>
-                    <i class="right fas fa-angle-left"></i>
-                  </p>
-                </a>
-                <ul class="nav nav-treeview">
-                  <li class="nav-item">
-                    <a href="#" class="nav-link active">
-                      <i class="far fa-circle nav-icon"></i>
-                      <p>Active Page</p>
-                    </a>
-                  </li>
-                  <li class="nav-item">
-                    <a href="#" class="nav-link">
-                      <i class="far fa-circle nav-icon"></i>
-                      <p>Inactive Page</p>
-                    </a>
-                  </li>
-                </ul>
-              </li>
+            @endauth
+          </div>
+        </div>
 
-              @foreach (config('adminNav') as $item)
+        <!-- SidebarSearch Form -->
+        <div class="form-inline">
+          <div class="input-group" data-widget="sidebar-search">
+            <input class="form-control form-control-sidebar" type="search" placeholder="Search" aria-label="Search">
+            <div class="input-group-append">
+              <button class="btn btn-sidebar">
+                <i class="fas fa-search fa-fw"></i>
+              </button>
+            </div>
+          </div>
+        </div>
+
+        <!-- Sidebar Menu -->
+        <nav class="mt-2">
+          <ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu" data-accordion="false">
+            <!-- Add icons to the links using the .nav-icon class
+                                           with font-awesome or any other icon font library -->
+            <li class="nav-item menu-open">
+              <a href="#" class="nav-link active">
+                <i class="nav-icon fas fa-tachometer-alt"></i>
+                <p>
+                  <i class="right fas fa-angle-left"></i>
+                </p>
+              </a>
+              <ul class="nav nav-treeview">
                 <li class="nav-item">
-                  <a href="{{ $item['route'] }}" class="nav-link @if (Route::is($item['route.active'])) active @endif">
-                    <i class="{{ $item['icon'] }}"></i>
-                    <p>
-                      {{ $item['title'] }}
-                      @if ($item['new'])
-                        <span class="right badge badge-success">New</span>
-                      @endif
-                    </p>
+                  <a href="#" class="nav-link active">
+                    <i class="far fa-circle nav-icon"></i>
+                    <p>Active Page</p>
                   </a>
                 </li>
-              @endforeach
-            </ul>
-          </nav>
-          <!-- /.sidebar-menu -->
-        </div>
-        <!-- /.sidebar -->
-      </aside>
+                <li class="nav-item">
+                  <a href="#" class="nav-link">
+                    <i class="far fa-circle nav-icon"></i>
+                    <p>Inactive Page</p>
+                  </a>
+                </li>
+              </ul>
+            </li>
 
-      <!-- Content Wrapper. Contains page content -->
-      <div class="content-wrapper">
-        <!-- Content Header (Page header) -->
-        <div class="content-header">
-          <div class="container-fluid">
-            <div class="row mb-2">
-              <div class="col-sm-6">
-                <h1 class="m-0">
-                  @yield('breadcrumb')
-                </h1>
-              </div><!-- /.col -->
-              <div class="col-sm-6">
-                <ol class="breadcrumb float-sm-right">
-                  <li class="breadcrumb-item"><a href="#">Home</a></li>
-                  <li class="breadcrumb-item"><a href="#">Starter Page</a></li>
-                  @stack('ineerNav')
-                </ol>
-              </div><!-- /.col -->
-            </div><!-- /.row -->
-          </div><!-- /.container-fluid -->
-        </div>
-        <!-- /.content-header -->
-
-        <!-- Main content -->
-        <div class="content">
-          <div class="container-fluid">
-            <div class="row">
-              <div class="col-12">
-
-              </div>
-              <br>
-              @yield('content')
-            </div>
-            <!-- /.row -->
-          </div><!-- /.container-fluid -->
-        </div>
-        <!-- /.content -->
+            @foreach (config('adminNav') as $item)
+              <li class="nav-item">
+                <a href="{{ $item['route'] }}" class="nav-link @if (Route::is($item['route.active'])) active @endif">
+                  <i class="{{ $item['icon'] }}"></i>
+                  <p>
+                    {{ $item['title'] }}
+                    @if ($item['new'])
+                      <span class="right badge badge-success">New</span>
+                    @endif
+                  </p>
+                </a>
+              </li>
+            @endforeach
+          </ul>
+        </nav>
+        <!-- /.sidebar-menu -->
       </div>
-      <!-- /.content-wrapper -->
+      <!-- /.sidebar -->
+    </aside>
 
-      <!-- Control Sidebar -->
-      <aside class="control-sidebar control-sidebar-dark">
-        <!-- Control sidebar content goes here -->
-        <div class="p-3">
-          <h5>Title</h5>
-          <p>Sidebar content</p>
-        </div>
-      </aside>
-      <!-- /.control-sidebar -->
+    <!-- Content Wrapper. Contains page content -->
+    <div class="content-wrapper">
+      <!-- Content Header (Page header) -->
+      <div class="content-header">
+        <div class="container-fluid">
+          <div class="row mb-2">
+            <div class="col-sm-6">
+              <h1 class="m-0">
+                @yield('breadcrumb')
+              </h1>
+            </div><!-- /.col -->
+            <div class="col-sm-6">
+              <ol class="breadcrumb float-sm-right">
+                <li class="breadcrumb-item"><a href="#">Home</a></li>
+                <li class="breadcrumb-item"><a href="#">Starter Page</a></li>
+                @stack('ineerNav')
+              </ol>
+            </div><!-- /.col -->
+          </div><!-- /.row -->
+        </div><!-- /.container-fluid -->
+      </div>
+      <!-- /.content-header -->
 
-      <!-- Main Footer -->
-      <footer class="main-footer">
-        <!-- To the right -->
-        <div class="float-right d-none d-sm-inline">
-          Anything you want
-        </div>
-        <!-- Default to the left -->
-        <strong>Copyright &copy; 2014-2021 <a href="https://adminlte.io">AdminLTE.io</a>.</strong> All rights reserved.
-      </footer>
+      <!-- Main content -->
+      <div class="content">
+        <div class="container-fluid">
+          <div class="row">
+            <div class="col-12">
+
+            </div>
+            <br>
+            @yield('content')
+          </div>
+          <!-- /.row -->
+        </div><!-- /.container-fluid -->
+      </div>
+      <!-- /.content -->
+    </div>
+    <!-- /.content-wrapper -->
+
+    <!-- Control Sidebar -->
+    <aside class="control-sidebar control-sidebar-dark">
+      <!-- Control sidebar content goes here -->
+      <div class="p-3">
+        <h5>Title</h5>
+        <p>Sidebar content</p>
+      </div>
+    </aside>
+    <!-- /.control-sidebar -->
+
+    <!-- Main Footer -->
+    <footer class="main-footer">
+      <!-- To the right -->
+      <div class="float-right d-none d-sm-inline">
+        Anything you want
+      </div>
+      <!-- Default to the left -->
+      <strong>Copyright &copy; 2014-2021 <a href="https://adminlte.io">AdminLTE.io</a>.</strong> All rights reserved.
+    </footer>
     </div>
     <!-- ./wrapper -->
     <!-- REQUIRED SCRIPTS -->
-<div aria-live="polite" aria-atomic="true" style="position: relative; min-height: 200px;">
-  <div class="toast" style="position: absolute; top: 0; right: 0;">
-    <div class="toast-header">
-      <img src="..." class="rounded mr-2" alt="...">
-      <strong class="mr-auto">New Order</strong>
-      <small></small>
-      <button type="button" class="ml-2 mb-1 close" data-dismiss="toast" aria-label="Close">
-        <span aria-hidden="true">&times;</span>
-      </button>
-    </div>
-    <div class="toast-body">
-    </div>
-  </div>
-    <!-- jQuery -->
-    <script src="{{ asset('plugins/jquery/jquery.min.js') }}"></script>
-    <!-- Bootstrap 4 -->
-    <script src="{{ asset('plugins/bootstrap/js/bootstrap.bundle.min.js') }}"></script>
-    <!-- AdminLTE App -->
-    <script src="{{ asset('dist/js/adminlte.min.js') }}"></script>
-    <script>
-      const userId = "{{ Auth::id() }}";
-    </script>
-    <script src="{{ asset('js/notifications.js') }}"></script>
-    @stack('scripts')
+    <div aria-live="polite" aria-atomic="true" style="position: relative; min-height: 200px;">
+      <div class="toast" style="position: absolute; top: 0; right: 0;">
+        <div class="toast-header">
+          <img src="..." class="rounded mr-2" alt="...">
+          <strong class="mr-auto">New Order</strong>
+          <small></small>
+          <button type="button" class="ml-2 mb-1 close" data-dismiss="toast" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="toast-body">
+        </div>
+      </div>
+      <!-- jQuery -->
+      <script src="{{ asset('plugins/jquery/jquery.min.js') }}"></script>
+      <!-- Bootstrap 4 -->
+      <script src="{{ asset('plugins/bootstrap/js/bootstrap.bundle.min.js') }}"></script>
+      <!-- AdminLTE App -->
+      <script src="{{ asset('dist/js/adminlte.min.js') }}"></script>
+      <script>
+        const userId = "{{ Auth::id() }}";
+      </script>
+      <script src="{{ asset('js/notifications.js') }}"></script>
+      @stack('scripts')
   </body>
 
   </html>
