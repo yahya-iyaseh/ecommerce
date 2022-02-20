@@ -16,6 +16,10 @@ class Category extends Model
     use SoftDeletes;
     // protected $with = ['parent', 'childs'];
     protected $guarded = [];
+
+    protected $hidden  = ['created_at', 'updated_at', 'deleted_at', 'description', 'image'];
+    protected $appends = ['image_url'];
+
     protected static function booted(){
         static::forceDeleted(function($category){
                 \Storage::delete($category->image);

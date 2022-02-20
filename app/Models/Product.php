@@ -19,7 +19,8 @@ class Product extends Model
         'name', 'slug', 'category_id', 'description', 'additional_info', 'image', 'price',
         'compare_price', 'cost', 'quantity', 'sku', 'barcode', 'status', ' availability '
     ];
-
+    protected $hidden  = ['created_at', 'updated_at', 'deleted_at', 'description', 'category', 'cost', 'sku', 'barcode', 'slug', 'image'];
+    protected $appends = ['image_url'];
     protected static function booted(){
         static::saving(function($product){
             $product->slug = Str::slug($product->name);
