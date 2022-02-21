@@ -6,9 +6,13 @@ use App\Models\Category;
 use Illuminate\Http\Request;
 use Illuminate\Validation\Rule;
 use App\Http\Controllers\Controller;
+use Illuminate\Support\Facades\Auth;
 
 class CategoriesController extends Controller
 {
+    public function __construct(){
+        $this->middleware(['auth:sanctum']);
+    }
     /**
      * Display a listing of the resource.
      *
@@ -28,12 +32,18 @@ class CategoriesController extends Controller
      */
     public function store(Request $request)
     {
+        // if I want to check if the user have abilites
+        // $user = Auth::guard('sanctum')->user();
+        // if(!$user->tokenCan('categories.create')){
+        //     abort(403, 'Hello I catch you');
+        // }
         $request->validate([
             'name' => ['required', 'string', 'max:255', Rule::unique('categories', 'name')],
             'parent_id' => ['nullable', 'numeric', 'exists:categories,id'],
         ]);
         $category = Category::create($request->all());
         return response($category, 201, [
+            // to send new header x-withHeadername
             'x-server-message' => "hello man",
         ]);
         return $category;

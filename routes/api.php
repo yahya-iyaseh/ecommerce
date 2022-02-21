@@ -4,6 +4,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Api\ProductsController;
 use App\Http\Controllers\Api\CategoriesController;
+use App\Http\Controllers\Api\AccessTokenController;
 
 /*
 |--------------------------------------------------------------------------
@@ -29,3 +30,5 @@ Route::apiResources([
     'products' => ProductsController::class
 ]);
 
+Route::post('access/tokens', [AccessTokenController::class, 'store']);
+Route::delete('access/tokens/{token?}', [AccessTokenController::class, 'destroy'])->middleware('auth:sanctum');
