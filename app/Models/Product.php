@@ -3,6 +3,7 @@
 namespace App\Models;
 
 use App\Models\Tag;
+use App\Models\Review;
 use App\Models\Category;
 use Illuminate\Support\Str;
 use Illuminate\Database\Eloquent\Model;
@@ -58,7 +59,9 @@ class Product extends Model
             'archived' => 'Archived',
         ];
     }
-
+    public function reviews(){
+        return $this->morphMany(Review::class, 'reviewable');
+    }
     public function cartUsers(){
         return $this->belongsToMany(User::class,'carts', 'product_id', 'user_id', 'id', 'id');
     }

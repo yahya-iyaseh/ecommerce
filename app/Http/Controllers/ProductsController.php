@@ -23,4 +23,27 @@ class ProductsController extends Controller
     {
         return view('store.products.show', compact('category', 'product'));
     }
+    public function review(Request $request, Product $product)
+    {
+        dd($product);
+
+        $request->validate([
+            'rating' => ['required', 'int', 'min:1', 'max:5'],
+            'review' => ['nullable', 'string']
+        ]);
+        // $review = Review::create([
+        //     'reviewable_type' => Product::class,
+        //     'reviewable_id' => $product->id,
+        //     'user_id' => Auth::id(),
+        //     'rating' => $request->post('rating'),
+        //     'review' => $request->post('review'),
+        // ]);
+
+        $product->reviews()->create([
+            'rating' => $request->post('rating'),
+            'review' => $request->post('review'),
+        ]);
+
+        return redirect()->to($product->url)->with('success', __('Product reviewd'));
+    }
 }

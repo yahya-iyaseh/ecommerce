@@ -45,12 +45,9 @@
         <th> @lang("Name") </th>
         <th>{{ __("Parent") }}</th>
         <th>{{ __("Created At") }}</th>
-
         <th class="text-center">{{ __("Actions") }}</th>
+
       </tr>
-
-
-
       @foreach ($categories as $key => $category)
         <tr>
             <td>
@@ -70,7 +67,8 @@
 
           <td>
             <div class="row">
-              <div class="col-md-6">
+                @can('categories.update')
+   <div class="col">
                 @if (request('deleteItems'))
                   <a href="{{ route('dashboard.categories.restore', $category->id) }}" class="btn btn-outline-success btn-sm mb-2 mb-md-0 w-full"><i class="fa fa-trash-restore"></i></a>
                 @else
@@ -78,13 +76,17 @@
                 @endif
                 </form>
               </div>
-              <div class="col-md-6">
+                @endcan
+
+
+              <div class="col">
                 <form action="{{ route('dashboard.categories.destroy', $category->id) }}" method="post" onsubmit="return confirm('Are you sure you want to destroy this category: {{ $category->name }}')">
                   @csrf
                   @method('DELETE')
                   <button type="submit" class="btn btn-outline-danger btn-sm w-full"><i class="far fa-trash-alt"></i></button>
                 </form>
-              </div>
+            </div>
+
             </div>
 
 

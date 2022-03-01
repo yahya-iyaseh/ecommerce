@@ -9,6 +9,7 @@ use Illuminate\Support\Str;
 use Illuminate\Http\Request;
 use Illuminate\Validation\Rule;
 use App\Http\Controllers\Controller;
+use Illuminate\Support\Facades\Gate;
 use Illuminate\Support\Facades\Storage;
 use App\Http\Requests\StoreCategoriesRequest;
 use App\Http\Requests\UpdateCategoriesRequest;
@@ -18,6 +19,7 @@ class CategoriesController extends Controller
 {
     public function __construct(){
         $this->middleware('auth');
+        // $this->middleware('can:categories.view')->only('index');
     }
     /**
      * Display a listing of the resource.
@@ -37,6 +39,9 @@ class CategoriesController extends Controller
      */
     public function create()
     {
+        if(Gate::denies('categories.create')){
+            return abort(403);
+        }
         $category = new Category();
         return view('categories.create', compact('category'));
     }
@@ -87,6 +92,7 @@ class CategoriesController extends Controller
      */
     public function edit(Category $category)
     {
+        Gate::authorize('categories.update');
         return view('categories.edit', compact('category'));
     }
 
@@ -126,7 +132,7 @@ class CategoriesController extends Controller
             'parent_id' => $request->CategoryParent,
             'image' => $imageName,
         ]);
-        
+
 
         notify()->success('The category was upateded successfully');
         return redirect()->route('dashboard.categories.index');

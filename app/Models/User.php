@@ -4,6 +4,8 @@ namespace App\Models;
 
 
 use App\Models\Cart;
+use App\Models\Role;
+use App\Models\Review;
 use App\Models\Product;
 use App\Models\Profile;
 use Laravel\Sanctum\HasApiTokens;
@@ -45,7 +47,14 @@ class User extends Authenticatable implements MustVerifyEmail
     protected $casts = [
         'email_verified_at' => 'datetime',
     ];
-
+    public function hasPermission($permission){
+        foreach ($this->roles as $role) {
+            if ($role->has($permission)) {
+                return true;
+            }
+        }
+        return false;
+    }
     public function profile(){
         return $this->hasOne(Profile::class)->withDefault();
     }
@@ -56,7 +65,17 @@ class User extends Authenticatable implements MustVerifyEmail
     public function cartProducts(){
         return $this->belongsToMany(Product::class,'carts', 'user_id', 'product_id', 'id', 'id');
     }
+    public function writtenReviews(){
+        return $this->hasMany(Review::class);
+    }
+    public function reviews()
+    {
+        return $this->morphMany(Review::class, 'reviewable');
+    }
     public function receivesBroadcastNotificationsOn(){
         return 'Notifications.' . $this->id;
+    }
+    public function roles(){
+        return $this->belongsToMany(Role::class);
     }
 }
