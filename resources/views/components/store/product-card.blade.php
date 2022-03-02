@@ -18,11 +18,12 @@
          </div>
          <div class="ps-shoe__content">
            <div class="ps-shoe__variants">
-             <div class="ps-shoe__variant normal">
-               {{-- <img src="{{ asset('template/images//access/1.jpg') }}" alt="">
-                          <img src="{{ asset('template/images//access/2.jpg') }}" alt="">
-                          <img src="{{ asset('template/images//access/3.jpg') }}" alt="">
-                          <img src="{{ asset('template/images//access/4.jpg') }}" alt=""> --}}
+             <div class="ps-shoe__variant normal d-flex">
+                 @foreach ($product->getMedia('gallery') as $media)
+               <img src="{{ $media->getUrl('thumb') }}" height="100"  alt="">
+                <input type="checkbox" value="{{ $media->id }}" name="media[]">
+                 @endforeach
+
              </div>
              <select class="ps-rating ps-shoe__rating">
                <option value="1">1</option>

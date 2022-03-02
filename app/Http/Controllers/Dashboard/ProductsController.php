@@ -7,10 +7,12 @@ use Illuminate\Support\Str;
 use Illuminate\Http\Request;
 use Illuminate\Validation\Rule;
 use App\Http\Controllers\Controller;
+use Spatie\MediaLibrary\MediaCollections\Models\Media;
 
 class ProductsController extends Controller
 {
-    public function __construct(){
+    public function __construct()
+    {
         $this->middleware(['auth']);
     }
     /**
@@ -107,9 +109,10 @@ class ProductsController extends Controller
         $data = $request->except('image');
         $data['image'] = $newImage;
         $product->update($data);
-        if(isset($oldImage)){
+        if (isset($oldImage)) {
             \Storage::delete($oldImage);
         }
+        $this->uploadGallery($product, $request);
         notify()->success('Update Product', "Product ({$product->name}) updated successfully");
         return redirect()->route('dashboard.products.index');
     }
@@ -162,6 +165,23 @@ class ProductsController extends Controller
             'sku' => ['nullable', 'string', Rule::unique('products', 'sku')->ignore($id)],
             'barcode' => ['nullable', 'string', Rule::unique('products', 'barcode')->ignore($id)],
             'image' => [$required, 'image'],
+            'delete_medai' => ['array'],
         ];
+    }
+    protected function uploadGallery($product, $request){
+        if ($request->hasFile('gallery')) {
+            foreach ($request->file('gallery') as $file) {
+                $path = $file->store('gallery', [
+                    'disk' => 'public'
+                ]);
+
+                $product->addMediaFromDisk($path, 'public')->preservingOriginal()->toMediaCollection('gallery');
+            }
+        }
+
+        if($request->post('delete_media')){
+            Media::destroy($request->post('delete_media'));
+        }
+
     }
 }

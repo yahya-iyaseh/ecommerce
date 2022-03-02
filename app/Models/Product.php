@@ -6,14 +6,17 @@ use App\Models\Tag;
 use App\Models\Review;
 use App\Models\Category;
 use Illuminate\Support\Str;
+use Spatie\MediaLibrary\HasMedia;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Facades\Storage;
+use Spatie\MediaLibrary\InteractsWithMedia;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Spatie\MediaLibrary\MediaCollections\Models\Media;
 
-class Product extends Model
+class Product extends Model implements HasMedia
 {
-    use HasFactory;
-    use SoftDeletes;
+    use HasFactory, SoftDeletes, InteractsWithMedia;
 
     protected $with = ['category'];
     protected $fillable = [
@@ -22,11 +25,12 @@ class Product extends Model
     ];
     protected $hidden  = ['created_at', 'updated_at', 'deleted_at', 'description', 'category', 'cost', 'sku', 'barcode', 'slug', 'image'];
     protected $appends = ['image_url'];
-    protected static function booted(){
-        static::saving(function($product){
+    protected static function booted()
+    {
+        static::saving(function ($product) {
             $product->slug = Str::slug($product->name);
         });
-        static::forceDeleted(function($product){
+        static::forceDeleted(function ($product) {
             \Storage::delete($product->image);
         });
     }
@@ -59,36 +63,49 @@ class Product extends Model
             'archived' => 'Archived',
         ];
     }
-    public function reviews(){
+    public function reviews()
+    {
         return $this->morphMany(Review::class, 'reviewable');
     }
-    public function cartUsers(){
-        return $this->belongsToMany(User::class,'carts', 'product_id', 'user_id', 'id', 'id');
+    public function cartUsers()
+    {
+        return $this->belongsToMany(User::class, 'carts', 'product_id', 'user_id', 'id', 'id');
     }
-    public function category(){
+    public function category()
+    {
         return $this->belongsTo(Category::class);
     }
-    public function tags(){
+    public function tags()
+    {
         return $this->belongsToMany(Tag::class, 'product_tag');
     }
-    public function getImageUrlAttribute(){
-        if(!$this->image){
+    public function getImageUrlAttribute()
+    {
+        if (!$this->image) {
             return asset('images/noImage.png');
         }
-        if(Str::startsWith($this->image, ['https://', 'http://'])){
+        if (Str::startsWith($this->image, ['https://', 'http://'])) {
             return $this->image;
         }
 
         return Storage::url($this->image);
     }
 
-    public function getDiscountAttribute(){
-        if($this->compare_price){
-            return -number_format(( $this->compare_price -  $this->price) / $this->compare_price * 100, 1);
+    public function getDiscountAttribute()
+    {
+        if ($this->compare_price) {
+            return -number_format(($this->compare_price -  $this->price) / $this->compare_price * 100, 1);
         }
         return 0;
     }
-    public function getUrlAttribute(){
+    public function getUrlAttribute()
+    {
         return route('product.show', [$this->category->id, $this->id]);
+    }
+
+    public function registerMediaConversions(Media $media = null): void
+    {
+        $this->addMediaConversion('thumb')
+        ->crop('crop-center', 200, 280);
     }
 }

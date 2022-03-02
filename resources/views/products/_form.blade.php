@@ -87,11 +87,28 @@
        <div class="form-group mb-3 col-12 text-center">
          <label for="image">
            Thumbnail
-             <img src="{{ $product->image }}" alt="Uploded Image" id="blah" class="mx-auto mt-2" width="350">
+             <img src="{{ $product->image_url }}" alt="Uploded Image" id="blah" class="mx-auto mt-2" width="350">
 
          </label>
          <input type="file" name="image" id="image" class="form-control d-none @error('image') is-invalid @enderror" onchange="document.getElementById('blah').src = window.URL.createObjectURL(this.files[0])">
          @error('image')
+           <span class="invalid-feedback d-block" role="alert"><strong>{{ $message }}</strong></span>
+         @enderror
+       </div>
+       <div class="form-group mb-3 col-12 text-center">
+         <label for="image">
+          Gallery
+          <div class="row mb-2 text-center">
+              @foreach ($product->getMedia('gallery') as $media)
+                <div class="col-3 mb-2">
+
+                    <div class="text-danger"><input type="checkbox" name="delete_media[]" value="{{ $media->id }}" id="{{ 'media.' . $media->id }}" class="text-danger"><label class="text-sm" for="{{ 'media.' . $media->id }}">Delete<img src="{{ $media->getUrl('thumb') }}" alt=""></label></div>
+                </div>
+              @endforeach
+          </div>
+         </label>
+         <input type="file" name="gallery[]" multiple id="gallery" class="form-control @error('gallery') is-invalid @enderror">
+         @error('gallery')
            <span class="invalid-feedback d-block" role="alert"><strong>{{ $message }}</strong></span>
          @enderror
        </div>

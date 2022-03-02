@@ -15,23 +15,32 @@
             <div class="ps-product__preview">
               <div class="ps-product__variants">
                 <div class="item"><img src="{{ $product->image_url }}" alt=""></div>
-                <div class="item"><img src="{{ asset('template/images/shoe-detail/2.jpg') }}" alt=""></div>
-                <div class="item"><img src="{{ asset('template/images/shoe-detail/3.jpg') }}" alt=""></div>
-                <div class="item"><img src="{{ asset('template/images/shoe-detail/3.jpg') }}" alt=""></div>
-                <div class="item"><img src="{{ asset('template/images/shoe-detail/3.jpg') }}" alt=""></div>
-              </div><a class="popup-youtube ps-product__video" href="#"><img src="{{ $product->image_url }}" alt=""><i class="fa fa-play"></i></a>
+                @foreach ($product->getMedia('gallery') as $media)
+                  <div class="item"><img src="{{ $media->getUrl() }}" alt=""></div>
+                @endforeach
+
+              </div>
+              {{-- <a class="popup-youtube ps-product__video" href="#"><img src="{{ $product->image_url }}" alt=""><i class="fa fa-play"></i></a> --}}
             </div>
             <div class="ps-product__image">
-              <div class="item"><img class="zoom" src="{{ $product->image_url }}" alt="" data-zoom-image="{{ $product->image_url }}"></div>
-              <div class="item"><img class="zoom" src="{{ asset('template/images/shoe-detail/2.jpg') }}" alt="" data-zoom-image="{{ asset('template/images/shoe-detail/2.jpg') }}"></div>
-              <div class="item"><img class="zoom" src="{{ asset('template/images/shoe-detail/3.jpg') }}" alt="" data-zoom-image="{{ asset('template/images/shoe-detail/3.jpg') }}"></div>
+              <div class="item"><img class="zoom" src="{{ $product->image_url }}" alt=""  data-zoom-image="{{ $product->image_url }}"></div>
+              @foreach ($product->getMedia('gallery') as $media)
+                <img src="{{ $media->getUrl() }}" alt="">
+                <div class="item">
+                  <img class="zoom" src="{{ $media->getUrl() }}" alt="" data-zoom-image="{{ $media->getUrl() }}">
+                </div>
+              @endforeach
             </div>
           </div>
           <div class="ps-product__thumbnail--mobile">
             <div class="ps-product__main-img"><img src="{{ $product->image_url }}" alt=""></div>
             <div class="ps-product__preview owl-slider" data-owl-auto="true" data-owl-loop="true" data-owl-speed="5000" data-owl-gap="20" data-owl-nav="true" data-owl-dots="false" data-owl-item="3" data-owl-item-xs="3" data-owl-item-sm="3"
-              data-owl-item-md="3" data-owl-item-lg="3" data-owl-duration="1000" data-owl-mousedrag="on"><img src="{{ asset('template/images/shoe-detail/1.jpg') }}" alt=""><img src="{{ asset('template/images/shoe-detail/2.jpg') }}" alt=""><img
-                src="{{ asset('template/images/shoe-detail/3.jpg') }}" alt=""></div>
+              data-owl-item-md="3" data-owl-item-lg="3" data-owl-duration="1000" data-owl-mousedrag="on">
+              @foreach ($product->getMedia('gallery') as $media)
+                <img src="{{ $media->getUrl() }}" alt="">
+              @endforeach
+
+            </div>
           </div>
           <div class="ps-product__info">
             <div class="ps-product__rating">
@@ -54,7 +63,7 @@
             </h3>
             <div class="ps-product__block ps-product__quickview">
               <h4>QUICK REVIEW</h4>
-              <p>{{ Str::words($product->description, 10) }}...</p>
+              <p>{!! $product->description!!}...</p>
             </div>
             <form action="{{ route('cart') }}" method="post">
               @csrf
@@ -115,7 +124,7 @@
             </div>
             <div class="tab-pane" role="tabpanel" id="tab_02">
               <p class="mb-20">{{ $product->reviews()->count() }} review for <strong>{{ $product->name }}</strong></p>
-              @foreach ($product->reviews as $review)
+              {{-- @foreach ($product->reviews as $review)
                 <div class="ps-review">
                   <div class="ps-review__thumbnail"><img src="{{ asset('template/images/user/1.jpg') }}" alt=""></div>
                   <div class="ps-review__content">
@@ -130,7 +139,7 @@
                     <p>{{ $review->review }}</p>
                   </div>
                 </div>
-              @endforeach
+              @endforeach --}}
               <form class="ps-product__review" action="{{ route('products.reviews.store', $product->id) }}" method="post">
                 <h4>ADD YOUR REVIEW</h4>
                 <div class="row">
@@ -146,39 +155,39 @@
                     </select>
                   </div>
 
-                <div class="col-lg-8 col-md-8 col-sm-6 col-xs-12 ">
-                  <div class="form-group">
-                    <label>Your Review:</label>
-                    <textarea class="form-control" name="review" rows="6"></textarea>
-                  </div>
-                  <div class="form-group">
-                    <button class="ps-btn ps-btn--sm">Submit<i class="ps-icon-next"></i></button>
+                  <div class="col-lg-8 col-md-8 col-sm-6 col-xs-12 ">
+                    <div class="form-group">
+                      <label>Your Review:</label>
+                      <textarea class="form-control" name="review" rows="6"></textarea>
+                    </div>
+                    <div class="form-group">
+                      <button class="ps-btn ps-btn--sm">Submit<i class="ps-icon-next"></i></button>
+                    </div>
                   </div>
                 </div>
+              </form>
             </div>
-            </form>
-          </div>
-          <div class="tab-pane" role="tabpanel" id="tab_03">
-            <p>Add your tag <span> *</span></p>
-            <form class="ps-product__tags" action="_action" method="post">
+            <div class="tab-pane" role="tabpanel" id="tab_03">
+              <p>Add your tag <span> *</span></p>
+              <form class="ps-product__tags" action="_action" method="post">
+                <div class="form-group">
+                  <input class="form-control" type="text" placeholder="">
+                  <button class="ps-btn ps-btn--sm">Add Tags</button>
+                </div>
+              </form>
+            </div>
+            <div class="tab-pane" role="tabpanel" id="tab_04">
               <div class="form-group">
-                <input class="form-control" type="text" placeholder="">
-                <button class="ps-btn ps-btn--sm">Add Tags</button>
+                <textarea class="form-control" rows="6" placeholder="Enter your addition here..."></textarea>
               </div>
-            </form>
-          </div>
-          <div class="tab-pane" role="tabpanel" id="tab_04">
-            <div class="form-group">
-              <textarea class="form-control" rows="6" placeholder="Enter your addition here..."></textarea>
-            </div>
-            <div class="form-group">
-              <button class="ps-btn" type="button">Submit</button>
+              <div class="form-group">
+                <button class="ps-btn" type="button">Submit</button>
+              </div>
             </div>
           </div>
         </div>
       </div>
     </div>
-  </div>
   </div>
   <div class="ps-section ps-section--top-sales ps-owl-root pt-40 pb-80">
     <div class="ps-container">
