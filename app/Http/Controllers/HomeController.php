@@ -14,8 +14,15 @@ class HomeController extends Controller
      */
     public function index()
     {
-        $newProducts = Product::latest()->limit(8)->get();
-        $topSales = Product::inRandomOrder()->limit(12)->get();
+        $newProducts = cache()->remember('data', 3600, function () {
+            return Product::latest()->limit(8)->get();
+        });
+        $topSales = cache()->remember('data2', 3600, function () {
+            return Product::inRandomOrder()->limit(12)->get();
+        });
+
+
+
         return view(
             'store.home',
             [

@@ -78,20 +78,21 @@ Route::prefix('/dashboard')->group(function () {
 Route::get('/checkout', [CheckoutController::class, 'index'])->name('checkout.index');
 Route::post('/checkout', [CheckoutController::class, 'store'])->name('checkout.store');
 
-Route::get('/profile', [UserProfileController::class, 'index'])->name('profile')->middleware(['auth']);
+Route::get('/profile', [UserProfileController::class, 'index'])->name('profile')->middleware(['auth:web,admin']);
 Route::post('/profile/update', [UserProfileController::class, 'update'])->name('profile.update')->middleware(['auth', 'password.confirm']);
 Route::get('/change-password', [ChangeUserPasswordController::class, 'index'])->name('change-password')->middleware(['auth']);
 Route::post('/profile/update/password', [ChangeUserPasswordController::class, 'update'])->name('change-password.update')->middleware(['auth']);
 
 Route::get('/dashboard', function () {
     return view('dashboard.dashboard');
-})->middleware(['auth'])->name('dashboard');
+})->middleware(['auth:admin'])->name('dashboard');
 
 Route::get('test', function () {
     return view('layouts.store');
 });
 
 
-require __DIR__ . '/auth.php';
+// require __DIR__ . '/auth.php';
+
 //     }
 // );

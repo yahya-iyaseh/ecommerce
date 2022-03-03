@@ -50,7 +50,7 @@
 <!--[if IE 8]><body class="ie8 lt-ie9 lt-ie10"><![endif]-->
 <!--[if IE 9]><body class="ie9 lt-ie10"><![endif]-->
 
-<body class="ps-loading">
+<body class="">
      <x:notify-messages />
   <div class="header--sidebar"></div>
   <header class="header">
